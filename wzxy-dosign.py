@@ -7,6 +7,25 @@ from urllib.parse import urlencode
 
 
 class WoZaiXiaoYuanPuncher:
+    listUrl = "https://student.wozaixiaoyuan.com/sign/getSignMessage.json"
+    signUrl = "https://student.wozaixiaoyuan.com/sign/doSign.json"
+
+    data = {
+        "id": "",
+        "signId": "",
+        "latitude": 34.102702,
+        "longitude": 108.653637,
+        "country": "中国",
+        "province": "陕西省",
+        "city": "西安市",
+        "district": "鄠邑区",
+        "township": "五竹街道"
+    }
+
+
+
+
+
     def __init__(self):
         # JWSESSION
         self.jwsession = None
@@ -77,6 +96,10 @@ class WoZaiXiaoYuanPuncher:
 
     # 获取打卡列表，判断当前打卡时间段与打卡情况，符合条件则自动进行打卡
     def PunchIn(self):
+        data = {
+            'page': '1',
+            'size': '5'
+        }
         print("获取打卡列表中...")
         url = "https://student.wozaixiaoyuan.com/sign/getSignMessage.json"
         self.header['Host'] = "student.wozaixiaoyuan.com"
@@ -93,30 +116,22 @@ class WoZaiXiaoYuanPuncher:
                 self.PunchIn()
             else:
                 print("重新登录失败，请检查账号信息")     
-        elif res['code'] == 0:
-            print("打卡失败：不在打卡时间段内0000")
-            # 标志时段是否有效
-            inSeq = False
-            # 遍历每个打卡时段（不同学校的打卡时段数量可能不一样）
-            for i in res['data']:
-                # 判断时段是否有效
-                if int(i['state']) == 1:
-                    inSeq = True
-                    # 保存当前学校的打卡时段
-                    self.seq = int(i['seq'])
-                    # 判断是否已经打卡
-                    if int(i['type']) == 0:
-                        self.doPunchIn(str(i['seq']))
-                    elif int(i['type']) == 1:
-                        self.status_code = 2
-                        print("已经打过卡了")
-            # 如果当前时间不在任何一个打卡时段内
-            if inSeq == False:            
-                self.status_code = 3
-                print("打卡失败：不在打卡时间段内")
-            # 11111
         else:
-            print("出现未知错误!")
+            # self.doPunchIn(str(i['seq']))
+            self.headers['Content-Type'] = "application/x-www-form-urlencoded"
+            res = http_post(self.listUrl, headers=self.headers, data=data).json()
+            self.data["id"] = res['data'][0]['logId']
+            self.data["signId"] = res['data'][0]['id']
+
+
+        def submit_sign(self):
+        id_res = self.get_signID()
+        if id_res:
+            self.headers['Content-Type'] = "application/json"
+            res = http_post(self.signUrl, headers=self.headers, data=json.dumps(self.data)).json()
+            self.handle_res(res)
+
+
 
     # 执行打卡
     # 参数seq ： 当前打卡的序号

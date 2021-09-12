@@ -115,7 +115,9 @@ class WoZaiXiaoYuanPuncher:
             if loginStatus:
                 self.PunchIn()
             else:
-                print("重新登录失败，请检查账号信息")     
+                print("重新登录失败，请检查账号信息")
+        elif res['code'] == 0:
+            print("aaaaaaaa")
         else:
             # self.doPunchIn(str(i['seq']))
             self.headers['Content-Type'] = "application/x-www-form-urlencoded"
@@ -125,8 +127,8 @@ class WoZaiXiaoYuanPuncher:
 
 
         def submit_sign(self):
-        id_res = self.get_signID()
-        if id_res:
+        idmin_res = self.get_signID()
+        if idmin_res:
             self.headers['Content-Type'] = "application/json"
             res = http_post(self.signUrl, headers=self.headers, data=json.dumps(self.data)).json()
             self.handle_res(res)

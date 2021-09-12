@@ -129,11 +129,14 @@ class WoZaiXiaoYuanPuncher:
             "district": "鄠邑区",
             "township": "五竹街道"
         }
+        data = {
+            'page': '1',
+            'size': '5'
+        }
         data = urlencode(sign_data)
         self.session = requests.session()    
         response = self.session.post(url=url, data=data, headers=self.header)
         response = json.loads(response.text)
-        # res = http_post("https://student.wozaixiaoyuan.com/sign/getSignMessage.json", headers=self.header, data=data).json()
         self.data["id"] = response['data'][0]['logId']
         self.data["signId"] = response['data'][0]['id']
         # 打卡情况

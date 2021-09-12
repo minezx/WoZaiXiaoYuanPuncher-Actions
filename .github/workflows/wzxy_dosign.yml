@@ -1,4 +1,4 @@
-name: WZXY_Dosign
+name: WZXY_DoSign
 
 on:
   workflow_dispatch:
@@ -12,7 +12,7 @@ on:
 
 
 jobs:
-  WZXY_Dosign:
+  WZXY_DoSign:
 
     runs-on: ubuntu-latest
     environment: WZXY_POSITION_DR

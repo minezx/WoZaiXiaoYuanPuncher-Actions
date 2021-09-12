@@ -92,9 +92,11 @@ class WoZaiXiaoYuanPuncher:
             if loginStatus:
                 self.PunchIn()
             else:
-                print("重新登录失败，请检查账号信息")     
+                print("重新登录失败，请检查账号信息")
+        elif res['code'] == 0:
+            print("aaaaaaaaaaaa")
         else:
-                self.doPunchIn(str(i[3]))
+            self.doPunchIn(str(i[3]))
 
 
     # 执行打卡

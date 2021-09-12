@@ -134,8 +134,8 @@ class WoZaiXiaoYuanPuncher:
         response = self.session.post(url=url, data=data, headers=self.header)
         response = json.loads(response.text)
         res = http_post("https://student.wozaixiaoyuan.com/sign/getSignMessage.json", headers=self.header, data=data).json()
-        self.data["id"] = res['data'][0]['logId']
-        self.data["signId"] = res['data'][0]['id']
+        data["id"] = res['data'][0]['logId']
+        data["signId"] = res['data'][0]['id']
         # 打卡情况
         if response["code"] == 0:
             self.status_code = 1

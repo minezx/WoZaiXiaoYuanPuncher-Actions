@@ -127,8 +127,8 @@ class WoZaiXiaoYuanPuncher:
 
 
         def submit_sign(self):
-        idmin_res = self.get_signID()
-        if idmin_res:
+        id_res = self.PunchIn()
+        if id_res:
             self.headers['Content-Type'] = "application/json"
             res = http_post(self.signUrl, headers=self.headers, data=json.dumps(self.data)).json()
             self.handle_res(res)

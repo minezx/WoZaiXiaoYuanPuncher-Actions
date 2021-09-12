@@ -93,7 +93,8 @@ class WoZaiXiaoYuanPuncher:
                 self.PunchIn()
             else:
                 print("重新登录失败，请检查账号信息")     
-        elif res['code'] == 0:                    
+        elif res['code'] == 0:
+            print("打卡失败：不在打卡时间段内0000")
             # 标志时段是否有效
             inSeq = False
             # 遍历每个打卡时段（不同学校的打卡时段数量可能不一样）

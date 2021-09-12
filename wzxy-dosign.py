@@ -7,25 +7,6 @@ from urllib.parse import urlencode
 
 
 class WoZaiXiaoYuanPuncher:
-    listUrl = "https://student.wozaixiaoyuan.com/sign/getSignMessage.json"
-    signUrl = "https://student.wozaixiaoyuan.com/sign/doSign.json"
-
-    data = {
-        "id": "",
-        "signId": "",
-        "latitude": 34.102702,
-        "longitude": 108.653637,
-        "country": "中国",
-        "province": "陕西省",
-        "city": "西安市",
-        "district": "鄠邑区",
-        "township": "五竹街道"
-    }
-
-
-
-
-
     def __init__(self):
         # JWSESSION
         self.jwsession = None
@@ -96,10 +77,6 @@ class WoZaiXiaoYuanPuncher:
 
     # 获取打卡列表，判断当前打卡时间段与打卡情况，符合条件则自动进行打卡
     def PunchIn(self):
-        data = {
-            'page': '1',
-            'size': '5'
-        }
         print("获取打卡列表中...")
         url = "https://student.wozaixiaoyuan.com/sign/getSignMessage.json"
         self.header['Host'] = "student.wozaixiaoyuan.com"
@@ -115,49 +92,29 @@ class WoZaiXiaoYuanPuncher:
             if loginStatus:
                 self.PunchIn()
             else:
-                print("重新登录失败，请检查账号信息")
-        elif res['code'] == 0:
-            print("aaaaaaaa")
+                print("重新登录失败，请检查账号信息")     
         else:
-            # self.doPunchIn(str(i['seq']))
-            self.headers['Content-Type'] = "application/x-www-form-urlencoded"
-            res = http_post(self.listUrl, headers=self.headers, data=data).json()
-            self.data["id"] = res['data'][0]['logId']
-            self.data["signId"] = res['data'][0]['id']
-
-
-        def submit_sign(self):
-        id_res = self.PunchIn()
-        if id_res:
-            self.headers['Content-Type'] = "application/json"
-            res = http_post(self.signUrl, headers=self.headers, data=json.dumps(self.data)).json()
-            self.handle_res(res)
-
+                self.doPunchIn(str(i[3]))
 
 
     # 执行打卡
     # 参数seq ： 当前打卡的序号
     def doPunchIn(self, seq):
         print("正在进行：" + self.getSeq() + "...")
-        url = "https://student.wozaixiaoyuan.com/heat/signdata.json"
+        url = "https://student.wozaixiaoyuan.com/sign/doSign.json"
         self.header['Host'] = "student.wozaixiaoyuan.com"
         self.header['Content-Type'] = "application/x-www-form-urlencoded"
         self.header['JWSESSION'] = self.getJwsession()
         sign_data = {
-            "answers": '["0"]',
-            "seq": str(seq),
-            "temperature": utils.getRandomTemperature(os.environ['WZXY_TEMPERATURE']),
-            "latitude": os.environ['WZXY_LATITUDE'],
-            "longitude": os.environ['WZXY_LONGITUDE'],
-            "country": os.environ['WZXY_COUNTRY'],
-            "city": os.environ['WZXY_CITY'],
-            "district": os.environ['WZXY_DISTRICT'],
-            "province": os.environ['WZXY_PROVINCE'],
-            "township": os.environ['WZXY_TOWNSHIP'],
-            "street": os.environ['WZXY_STREET'],
-            "myArea": "",
-            "areacode": "",
-            "userId": ""
+            "id": "",
+            "signId": "",
+            "latitude": 34.102702,
+            "longitude": 108.653637,
+            "country": "中国",
+            "province": "陕西省",
+            "city": "西安市",
+            "district": "鄠邑区",
+            "township": "五竹街道"
         }
         data = urlencode(sign_data)
         self.session = requests.session()    

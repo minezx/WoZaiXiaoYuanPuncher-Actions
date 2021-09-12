@@ -96,7 +96,7 @@ class WoZaiXiaoYuanPuncher:
         elif res['code'] == 0:
             print("aaaaaaaaaaaa")
         else:
-            self.doPunchIn(str(i[3]))
+            self.doPunchIn(str(1))
 
 
     # 执行打卡

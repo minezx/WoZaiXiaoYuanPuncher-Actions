@@ -92,11 +92,9 @@ class WoZaiXiaoYuanPuncher:
             if loginStatus:
                 self.PunchIn()
             else:
-                print("重新登录失败，请检查账号信息")
-        elif res['code'] == 0:
-            print("aaaaaaaaaaaa")
+                print("重新登录失败，请检查账号信息")     
         else:
-            self.doPunchIn(str(1))
+                self.doPunchIn(str(1))
 
 
     # 执行打卡
@@ -119,6 +117,8 @@ class WoZaiXiaoYuanPuncher:
             "township": "五竹街道"
         }
         data = urlencode(sign_data)
+        self.data["id"] = res['data'][0]['logId']
+        self.data["signId"] = res['data'][0]['id']
         self.session = requests.session()    
         response = self.session.post(url=url, data=data, headers=self.header)
         response = json.loads(response.text)

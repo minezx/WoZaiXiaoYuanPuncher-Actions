@@ -76,7 +76,7 @@ class WoZaiXiaoYuanPuncher:
     # 执行打卡
     def doPunchIn(self):
         print("正在签到...")
-        url = "https://student.wozaixiaoyuan.com/sign/doSign.json"
+        url = "https://student.wozaixiaoyuan.com/sign/Sign.json"
         self.header['Host'] = "student.wozaixiaoyuan.com"
         self.header['Content-Type'] = "application/x-www-form-urlencoded"
         self.header['JWSESSION'] = self.getJwsession()

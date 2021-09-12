@@ -136,7 +136,7 @@ class WoZaiXiaoYuanPuncher:
         data = urlencode(sign_data)
         self.session = requests.session()    
         response = self.session.post(url=url, data=data, headers=self.header)
-        response = json.loads(response.text)
+        response = json.loads(response.json)
         self.data["id"] = response['data'][0]['logId']
         self.data["signId"] = response['data'][0]['id']
         # 打卡情况

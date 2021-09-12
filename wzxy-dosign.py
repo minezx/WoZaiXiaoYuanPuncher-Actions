@@ -117,8 +117,8 @@ class WoZaiXiaoYuanPuncher:
             "township": "五竹街道"
         }
         data = urlencode(sign_data)
-        self.data["id"] = res['data'][0]['logId']
-        self.data["signId"] = res['data'][0]['id']
+        self.data["id"] = response['data'][0]['logId']
+        self.data["signId"] = response['data'][0]['id']
         self.session = requests.session()    
         response = self.session.post(url=url, data=data, headers=self.header)
         response = json.loads(response.text)

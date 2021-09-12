@@ -6,6 +6,19 @@ import utils
 from urllib.parse import urlencode
 
 
+# 封装HTTP请求
+def http_post(url, headers={}, data={}, retry=3):
+    for i in range(retry):
+        try:
+            res = requests.post(url, headers=headers, data=data)
+            return res
+        except Exception as e:
+            logging.error("post请求错误: %s" % e)
+            logging.info('将在 100 秒后重新发起请求...')
+            time.sleep(100)
+    logging.error("本次发送请求失败！")
+
+
 class WoZaiXiaoYuanPuncher:
     def __init__(self):
         # JWSESSION

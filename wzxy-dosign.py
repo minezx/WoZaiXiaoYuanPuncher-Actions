@@ -5,20 +5,6 @@ import os
 import utils
 from urllib.parse import urlencode
 
-
-# 封装HTTP请求
-def http_post(url, headers={}, data={}, retry=3):
-    for i in range(retry):
-        try:
-            res = requests.post(url, headers=headers, data=data)
-            return res
-        except Exception as e:
-            logging.error("post请求错误: %s" % e)
-            logging.info('将在 100 秒后重新发起请求...')
-            time.sleep(100)
-    logging.error("本次发送请求失败！")
-
-
 class WoZaiXiaoYuanPuncher:
     def __init__(self):
         # JWSESSION
@@ -107,7 +93,7 @@ class WoZaiXiaoYuanPuncher:
             else:
                 print("重新登录失败，请检查账号信息")     
         else:
-                self.doPunchIn(str(1))
+                self.doPunchIn(1)
 
 
     # 执行打卡
@@ -129,14 +115,10 @@ class WoZaiXiaoYuanPuncher:
             "district": "鄠邑区",
             "township": "五竹街道"
         }
-        data = {
-            'page': '1',
-            'size': '5'
-        }
         data = urlencode(sign_data)
         self.session = requests.session()    
         response = self.session.post(url=url, data=data, headers=self.header)
-        response = json.loads(response.json)
+        response = json.loads(response.text)
         self.data["id"] = response['data'][0]['logId']
         self.data["signId"] = response['data'][0]['id']
         # 打卡情况

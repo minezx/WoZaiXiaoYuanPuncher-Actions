@@ -100,7 +100,7 @@ class WoZaiXiaoYuanPuncher:
     # 参数seq ： 当前打卡的序号
     def doPunchIn(self, seq):
         print("正在进行：" + self.getSeq() + "...")
-        url = "https://student.wozaixiaoyuan.com/sign/SignData.json"
+        url = "https://student.wozaixiaoyuan.com/sign/doSign.json"
         self.header['Host'] = "student.wozaixiaoyuan.com"
         self.header['Content-Type'] = "application/x-www-form-urlencoded"
         self.header['JWSESSION'] = self.getJwsession()

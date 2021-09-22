@@ -189,8 +189,8 @@ class WoZaiXiaoYuanPuncher:
             notifyToken = os.environ['SCT_KEY']
             url = "https://sctapi.ftqq.com/{}.send"
             body = {
-                "title": "⏰ 我在校园打卡结果通知：{}".format(notifyResult)
-                "desp": "打卡项目：日检日报\n\n打卡情况：\n\n打卡时段：{}\n\n打卡时间：{}".format( notifySeq, notifyTime)
+                "title": "⏰ 我在校园打卡结果通知"
+                "desp": "打卡项目：日检日报\n\n打卡情况：{}\n\n打卡时段：{}\n\n打卡时间：{}".format(notifyResult, notifySeq, notifyTime)
             }
             requests.post(url.format(notifyToken), data=body)
             print("消息经Serverchan-Turbo推送成功")

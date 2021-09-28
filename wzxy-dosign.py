@@ -98,6 +98,7 @@ class WoZaiXiaoYuanPuncher:
             # 遍历每个打卡时段（不同学校的打卡时段数量可能不一样）
             for i in res['data']:
                 # 判断时段是否有效
+                print("获取到了code=0")
                 if int(i['state']) == 1:
                     inSeq = True
                     # 保存当前学校的打卡时段
@@ -109,6 +110,8 @@ class WoZaiXiaoYuanPuncher:
                     if int(i['type']) == 1:
                         self.status_code = 2
                         print("已经打过卡了")
+                elif int(i['state'])==2:
+                    print("未在时间段！")
             # 如果当前时间不在任何一个打卡时段内
             if inSeq == False:            
                 self.status_code = 3

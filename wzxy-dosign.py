@@ -11,6 +11,10 @@ class WoZaiXiaoYuanPuncher:
         self.jwsession = None
         # 打卡时段
         self.seq = None
+        # 打卡ID
+        self.signid = None
+        # 打卡登录ID
+        self.signlogId = None
         # 打卡结果
         self.status_code = 0
         # 登陆接口
@@ -83,7 +87,7 @@ class WoZaiXiaoYuanPuncher:
         self.header['JWSESSION'] = self.getJwsession()
         sim_data = {
             "page": 1,
-            "size": 1
+            "size": 5
         }
         data = urlencode(sim_data)
         self.session = requests.session()    
@@ -109,13 +113,22 @@ class WoZaiXiaoYuanPuncher:
                 if int(i['state']) == 1:
                     inSeq = True
                     print("可以执行打卡代码了")
+
+                    ########打卡代码测试#######################
+                    # 保存打卡的id
+                    #self.signid = int(i['id'])
+                    #self.signlogId = int(i['logId'])
+                    self.doPunchIn(str(i['id']),str(i['logId']))
+
+
+
+
                     # 保存当前学校的打卡时段
                     # self.seq = int(i['seq'])
                     # 判断是否已经打卡
-                    # if int(i['type']) == 0:
-                    #    self.doPunchIn(str(i['seq']))
-                    # el
-                    if int(i['type']) == 1:
+                    if int(i['type']) == 0:
+                        #self.doPunchIn(str(i['seq']))
+                    elif int(i['type']) == 1:
                         self.status_code = 2
                         print("已经打过卡了")
                 elif int(i['state'])==2:
@@ -124,31 +137,21 @@ class WoZaiXiaoYuanPuncher:
             if inSeq == False:            
                 self.status_code = 3
                 print("打卡失败：不在打卡时间段内")
-                # self.doPunchIn(1)
 
 
-
-
-        # data = urlencode(sims_data)
-        # self.session = requests.session()
-        # response = self.session.post(url=url, data=data, headers=self.header)
-        # res = json.loads(response.text)
-        # 
-        #      
-        # 
 
 
     # 执行打卡
     # 参数seq ： 当前打卡的序号
-    def doPunchIn(self, seq):
-        print("正在进行：" + self.getSeq() + "...")
+    def doPunchIn(self,signid,signlogId):
+        print("正在签到...")
         url = "https://student.wozaixiaoyuan.com/sign/doSign.json"
         self.header['Host'] = "student.wozaixiaoyuan.com"
-        self.header['Content-Type'] = "application/x-www-form-urlencoded"
+        self.header['Content-Type'] = "application/json"
         self.header['JWSESSION'] = self.getJwsession()
         sign_data = {
-            "id": "",
-            "signId": "",
+            "id": str(signid),
+            "signId": str(signlogId),
             "latitude": 34.102702,
             "longitude": 108.653637,
             "country": "中国",
@@ -161,8 +164,6 @@ class WoZaiXiaoYuanPuncher:
         self.session = requests.session()    
         response = self.session.post(url=url, data=data, headers=self.header)
         response = json.loads(response.text)
-        self.data["id"] = response['data'][0]['logId']
-        self.data["signId"] = response['data'][0]['id']
         # 打卡情况
         if response["code"] == 0:
             self.status_code = 1

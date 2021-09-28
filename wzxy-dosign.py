@@ -80,8 +80,13 @@ class WoZaiXiaoYuanPuncher:
         url = "https://student.wozaixiaoyuan.com/sign/getSignMessage.json"
         self.header['Host'] = "student.wozaixiaoyuan.com"
         self.header['JWSESSION'] = self.getJwsession()
+        
+        signmessage_data = {
+            page=1&size=5
+        }
+        data = urlencode(signmessage_data)
         self.session = requests.session()
-        response = self.session.post(url=url, data=self.body, headers=self.header)
+        response = self.session.post(url=url, data=data, headers=self.header)
         res = json.loads(response.text)
         # 如果 jwsession 无效，则重新 登录 + 打卡
         if res['code'] == -10:

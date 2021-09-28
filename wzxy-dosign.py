@@ -77,7 +77,7 @@ class WoZaiXiaoYuanPuncher:
     # 获取打卡列表，判断当前打卡时间段与打卡情况，符合条件则自动进行打卡
     def PunchIn(self):
         print("获取打卡列表中...")
-        url = "https://student.wozaixiaoyuan.com/heat/getSignMessage.json"
+        url = "https://student.wozaixiaoyuan.com/sign/getSignMessage.json"
         self.header['Host'] = "student.wozaixiaoyuan.com"
         self.header['JWSESSION'] = self.getJwsession()
         self.session = requests.session()

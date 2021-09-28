@@ -103,9 +103,10 @@ class WoZaiXiaoYuanPuncher:
                     # 保存当前学校的打卡时段
                     self.seq = int(i['seq'])
                     # 判断是否已经打卡
-                    if int(i['type']) == 0:
-                        # self.doPunchIn(str(i['seq']))
-                    elif int(i['type']) == 1:
+                    # if int(i['type']) == 0:
+                    #    self.doPunchIn(str(i['seq']))
+                    # el
+                    if int(i['type']) == 1:
                         self.status_code = 2
                         print("已经打过卡了")
             # 如果当前时间不在任何一个打卡时段内

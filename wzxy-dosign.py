@@ -77,7 +77,7 @@ class WoZaiXiaoYuanPuncher:
     # 获取打卡列表，判断当前打卡时间段与打卡情况，符合条件则自动进行打卡
     def PunchIn(self):
         print("获取打卡列表中...")
-        url = "https://student.wozaixiaoyuan.com/sign/getSignMessage.json"
+        url = "https://student.wozaixiaoyuan.com/heat/getSignMessage.json"
         self.header['Host'] = "student.wozaixiaoyuan.com"
         self.header['JWSESSION'] = self.getJwsession()
         self.session = requests.session()
@@ -92,8 +92,27 @@ class WoZaiXiaoYuanPuncher:
                 self.PunchIn()
             else:
                 print("重新登录失败，请检查账号信息")     
-        else:
-                self.doPunchIn(1)
+        elif res['code'] == 0:                    
+            # 标志时段是否有效
+            inSeq = False
+            # 遍历每个打卡时段（不同学校的打卡时段数量可能不一样）
+            for i in res['data']:
+                # 判断时段是否有效
+                if int(i['state']) == 1:
+                    inSeq = True
+                    # 保存当前学校的打卡时段
+                    self.seq = int(i['seq'])
+                    # 判断是否已经打卡
+                    if int(i['type']) == 0:
+                        # self.doPunchIn(str(i['seq']))
+                    elif int(i['type']) == 1:
+                        self.status_code = 2
+                        print("已经打过卡了")
+            # 如果当前时间不在任何一个打卡时段内
+            if inSeq == False:            
+                self.status_code = 3
+                print("打卡失败：不在打卡时间段内")
+                # self.doPunchIn(1)
 
 
     # 执行打卡

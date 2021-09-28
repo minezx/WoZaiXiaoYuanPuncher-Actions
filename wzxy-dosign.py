@@ -82,7 +82,8 @@ class WoZaiXiaoYuanPuncher:
         self.header['JWSESSION'] = self.getJwsession()
         
         signmessage_data = {
-            'page=1&size=5'
+            "page":"1",
+            "size":"5"
         }
         data = urlencode(signmessage_data)
         self.session = requests.session()

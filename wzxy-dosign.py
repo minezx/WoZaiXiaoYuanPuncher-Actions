@@ -81,7 +81,7 @@ class WoZaiXiaoYuanPuncher:
         # self.header['Host'] = "student.wozaixiaoyuan.com"
         # self.header['JWSESSION'] = self.getJwsession()
         url = "https://student.wozaixiaoyuan.com/sign/getSignMessage.json"
-        values = {'page': 1, 'size': 5}
+        values = {'page=1&size=5'}
         self.header['Host'] = "student.wozaixiaoyuan.com"
         self.header['JWSESSION'] = self.getJwsession()
         # 打印values的数据类型,输出<class 'dict'>

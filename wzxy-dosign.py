@@ -83,7 +83,7 @@ class WoZaiXiaoYuanPuncher:
         self.header['JWSESSION'] = self.getJwsession()
         sim_data = {
             "page": 1,
-            "size": 5
+            "size": 1
         }
         data = urlencode(sim_data)
         self.session = requests.session()    

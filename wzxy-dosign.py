@@ -81,11 +81,8 @@ class WoZaiXiaoYuanPuncher:
         self.header['Host'] = "student.wozaixiaoyuan.com"
         self.header['JWSESSION'] = self.getJwsession()
         
-        signmessage_data = {
-            "page":"1",
-            "size":"5"
-        }
-        data = urlencode(signmessage_data)
+        sims_data = {"page": 1, "size": 5}
+        data = urlencode(sims_data)
         self.session = requests.session()
         response = self.session.post(url=url, data=data, headers=self.header)
         res = json.loads(response.text)
@@ -107,8 +104,9 @@ class WoZaiXiaoYuanPuncher:
                 print("获取到了code=0")
                 if int(i['state']) == 1:
                     inSeq = True
+                    print("可以执行打卡代码了")
                     # 保存当前学校的打卡时段
-                    self.seq = int(i['seq'])
+                    # self.seq = int(i['seq'])
                     # 判断是否已经打卡
                     # if int(i['type']) == 0:
                     #    self.doPunchIn(str(i['seq']))

@@ -77,8 +77,6 @@ class WoZaiXiaoYuanPuncher:
     # 获取打卡列表，判断当前打卡时间段与打卡情况，符合条件则自动进行打卡
     def PunchIn(self):
         print("获取打卡列表中...")
-
-
         url = "https://student.wozaixiaoyuan.com/sign/getSignMessage.json"
         self.header['Host'] = "student.wozaixiaoyuan.com"
         self.header['Content-Type'] = "application/x-www-form-urlencoded"
@@ -90,82 +88,54 @@ class WoZaiXiaoYuanPuncher:
         data = urlencode(sim_data)
         self.session = requests.session()    
         response = self.session.post(url=url, data=data, headers=self.header)
-        response = json.loads(response.text)
-        print(response)
+        res = json.loads(response.text)
+        print(res)
+        # 如果 jwsession 无效，则重新 登录 + 打卡
+        if res['code'] == -10:
+            print('jwsession 无效，将尝试使用账号信息重新登录')
+            self.status_code = 4
+            loginStatus = self.login()
+            if loginStatus:
+                self.PunchIn()
+            else:
+                print("重新登录失败，请检查账号信息")
+        elif res['code'] == 0:                    
+            # 标志时段是否有效
+            inSeq = False
+            # 遍历每个打卡时段（不同学校的打卡时段数量可能不一样）
+            for i in res['data']:
+                # 判断时段是否有效
+                print("获取到了code=0")
+                if int(i['state']) == 1:
+                    inSeq = True
+                    print("可以执行打卡代码了")
+                    # 保存当前学校的打卡时段
+                    # self.seq = int(i['seq'])
+                    # 判断是否已经打卡
+                    # if int(i['type']) == 0:
+                    #    self.doPunchIn(str(i['seq']))
+                    # el
+                    if int(i['type']) == 1:
+                        self.status_code = 2
+                        print("已经打过卡了")
+                elif int(i['state'])==2:
+                    print("未在时间段！")
+            # 如果当前时间不在任何一个打卡时段内
+            if inSeq == False:            
+                self.status_code = 3
+                print("打卡失败：不在打卡时间段内")
+                # self.doPunchIn(1)
 
 
-        # # url = "https://student.wozaixiaoyuan.com/sign/getSignMessage.json"
-        # # self.header['Host'] = "student.wozaixiaoyuan.com"
-        # # self.header['JWSESSION'] = self.getJwsession()
-        # url = "https://student.wozaixiaoyuan.com/sign/getSignMessage.json"
-        # ## values = {'page=1&size=5'}
-        # self.header['Host'] = "student.wozaixiaoyuan.com"
-        # self.header['JWSESSION'] = self.getJwsession()
-
-        # sims_data = {"page": 1, "size": 5}
-        # data = urlencode(sims_data)
-        # # 打印values的数据类型,输出<class 'dict'>
-        # ## print(type(values))
-        # ## print(values)
-        # # json.dump将python对象编码成json字符串
-        # ##values_json = json.dumps(values)
-        # # 打印编码成json字符串的values_json的数据类型,输出<class 'str'>
-        # ##print(type(values_json))
-        # ##print(values_json)
-        # # requests库提交数据进行post请求
-        # ##req = requests.post(url, data=values_json, headers=self.header)
-        # req = requests.post(url, data=data, headers=self.header)
-        # # 打印Unicode编码格式的json数据
-        # print(req.text)
-        # # 使用json.dumps()时需要对象相应的类型是json可序列化的
-        # change = req.json()
-        # # json.dumps序列化时对中文默认使用ASCII编码,如果无任何配置则打印的均为ascii字符,输出中文需要指定ensure_ascii=False
-        # new_req = json.dumps(change, ensure_ascii=False)
-        # # 打印接口返回的数据,且以中文编码
-        # print(new_req)
 
 
-
-        # sims_data = {"page": 1, "size": 5}
         # data = urlencode(sims_data)
         # self.session = requests.session()
         # response = self.session.post(url=url, data=data, headers=self.header)
         # res = json.loads(response.text)
-        # # 如果 jwsession 无效，则重新 登录 + 打卡
-        # if res['code'] == -10:
-        #     print('jwsession 无效，将尝试使用账号信息重新登录')
-        #     self.status_code = 4
-        #     loginStatus = self.login()
-        #     if loginStatus:
-        #         self.PunchIn()
-        #     else:
-        #         print("重新登录失败，请检查账号信息")     
-        # elif res['code'] == 0:                    
-        #     # 标志时段是否有效
-        #     inSeq = False
-        #     # 遍历每个打卡时段（不同学校的打卡时段数量可能不一样）
-        #     for i in res['data']:
-        #         # 判断时段是否有效
-        #         print("获取到了code=0")
-        #         if int(i['state']) == 1:
-        #             inSeq = True
-        #             print("可以执行打卡代码了")
-        #             # 保存当前学校的打卡时段
-        #             # self.seq = int(i['seq'])
-        #             # 判断是否已经打卡
-        #             # if int(i['type']) == 0:
-        #             #    self.doPunchIn(str(i['seq']))
-        #             # el
-        #             if int(i['type']) == 1:
-        #                 self.status_code = 2
-        #                 print("已经打过卡了")
-        #         elif int(i['state'])==2:
-        #             print("未在时间段！")
-        #     # 如果当前时间不在任何一个打卡时段内
-        #     if inSeq == False:            
-        #         self.status_code = 3
-        #         print("打卡失败：不在打卡时间段内")
-        #         # self.doPunchIn(1)
+        # 
+        #      
+        # 
 
 
     # 执行打卡

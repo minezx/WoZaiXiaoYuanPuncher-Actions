@@ -110,18 +110,9 @@ class WoZaiXiaoYuanPuncher:
             for i in res['data']:
                 # 判断时段是否有效
                 print("获取到了code=0")
-                ########打卡代码测试#######################
-                # 保存打卡的id
-                #self.signid = int(i['id'])
-                #self.signlogId = int(i['logId'])
-                self.doPunchIn(str(i['id']),str(i['logId']))
                 if int(i['state']) == 1:
                     inSeq = True
                     print("可以执行打卡代码了")
-
-
-
-
 
 
                     # 保存当前学校的打卡时段
@@ -129,7 +120,13 @@ class WoZaiXiaoYuanPuncher:
                     # 判断是否已经打卡
                     if int(i['type']) == 0:
                         print("打卡了打卡了")
-                        #self.doPunchIn(str(i['seq']))
+                        ########打卡代码测试#######################
+                        # 保存打卡的id
+                        #self.signid = int(i['id'])
+                        #self.signlogId = int(i['logId'])
+                        self.doPunchIn(str(i['id']),str(i['logId']))
+                        ##########################################
+
                     elif int(i['type']) == 1:
                         self.status_code = 2
                         print("已经打过卡了")
@@ -146,33 +143,35 @@ class WoZaiXiaoYuanPuncher:
     # 执行打卡
     # 参数seq ： 当前打卡的序号
     def doPunchIn(self,signid,signlogId):
-        print("正在签到...")
-        url = "https://student.wozaixiaoyuan.com/sign/doSign.json"
-        self.header['Host'] = "student.wozaixiaoyuan.com"
-        self.header['Content-Type'] = "application/json"
-        self.header['JWSESSION'] = self.getJwsession()
-        sign_data = {
-            "id": str(signid),
-            "signId": str(signlogId),
-            "latitude": 34.102702,
-            "longitude": 108.653637,
-            "country": "中国",
-            "province": "陕西省",
-            "city": "西安市",
-            "district": "鄠邑区",
-            "township": "五竹街道"
-        }
-        data = urlencode(sign_data)
-        self.session = requests.session()    
-        response = self.session.post(url=url, data=data, headers=self.header)
-        response = json.loads(response.text)
-        # 打卡情况
-        if response["code"] == 0:
-            self.status_code = 1
-            print("打卡成功")
-        else:
-            print(response)
-            print("打卡失败")
+        print("正在测试签到...")
+        print(signid)
+        print(signlogId)
+        # url = "https://student.wozaixiaoyuan.com/sign/doSign.json"
+        # self.header['Host'] = "student.wozaixiaoyuan.com"
+        # self.header['Content-Type'] = "application/json"
+        # self.header['JWSESSION'] = self.getJwsession()
+        # sign_data = {
+        #     "id": str(signid),
+        #     "signId": str(signlogId),
+        #     "latitude": 34.102702,
+        #     "longitude": 108.653637,
+        #     "country": "中国",
+        #     "province": "陕西省",
+        #     "city": "西安市",
+        #     "district": "鄠邑区",
+        #     "township": "五竹街道"
+        # }
+        # data = urlencode(sign_data)
+        # self.session = requests.session()    
+        # response = self.session.post(url=url, data=data, headers=self.header)
+        # response = json.loads(response.text)
+        # # 打卡情况
+        # if response["code"] == 0:
+        #     self.status_code = 1
+        #     print("打卡成功")
+        # else:
+        #     print(response)
+        #     print("打卡失败")
                 
     # 获取打卡时段
     def getSeq(self):

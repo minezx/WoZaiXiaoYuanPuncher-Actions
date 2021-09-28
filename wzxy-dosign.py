@@ -127,6 +127,7 @@ class WoZaiXiaoYuanPuncher:
                     # self.seq = int(i['seq'])
                     # 判断是否已经打卡
                     if int(i['type']) == 0:
+                        print("打卡了打卡了")
                         #self.doPunchIn(str(i['seq']))
                     elif int(i['type']) == 1:
                         self.status_code = 2

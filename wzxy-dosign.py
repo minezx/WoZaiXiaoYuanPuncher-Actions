@@ -82,8 +82,8 @@ class WoZaiXiaoYuanPuncher:
         # self.header['JWSESSION'] = self.getJwsession()
         url = "https://student.wozaixiaoyuan.com/sign/getSignMessage.json"
         values = {"page": 1, "size": 5}
-        header['Host'] = "student.wozaixiaoyuan.com"
-        header['JWSESSION'] = self.getJwsession()
+        self.header['Host'] = "student.wozaixiaoyuan.com"
+        self.header['JWSESSION'] = self.getJwsession()
         # 打印values的数据类型,输出<class 'dict'>
         print(type(values))
         print(values)
@@ -93,7 +93,7 @@ class WoZaiXiaoYuanPuncher:
         print(type(values_json))
         print(values_json)
         # requests库提交数据进行post请求
-        req = requests.post(url, data=values_json, headers=header)
+        req = requests.post(url, data=values_json, headers=self.header)
         # 打印Unicode编码格式的json数据
         print(req.text)
         # 使用json.dumps()时需要对象相应的类型是json可序列化的

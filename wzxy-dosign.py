@@ -110,15 +110,16 @@ class WoZaiXiaoYuanPuncher:
             for i in res['data']:
                 # 判断时段是否有效
                 print("获取到了code=0")
+                ########打卡代码测试#######################
+                # 保存打卡的id
+                #self.signid = int(i['id'])
+                #self.signlogId = int(i['logId'])
+                self.doPunchIn(str(i['id']),str(i['logId']))
                 if int(i['state']) == 1:
                     inSeq = True
                     print("可以执行打卡代码了")
 
-                    ########打卡代码测试#######################
-                    # 保存打卡的id
-                    #self.signid = int(i['id'])
-                    #self.signlogId = int(i['logId'])
-                    self.doPunchIn(str(i['id']),str(i['logId']))
+
 
 
 

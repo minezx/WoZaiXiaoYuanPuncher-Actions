@@ -151,8 +151,8 @@ class WoZaiXiaoYuanPuncher:
         self.header['Content-Type'] = "application/json"
         self.header['JWSESSION'] = self.getJwsession()
         values = {
-            "id": str(signid),
-            "signId": str(signlogId),
+            "id": str(signlogId),
+            "signId": str(signid),
             "latitude": 34.102702,
             "longitude": 108.653637,
             "country": "\u4e2d\u56fd",

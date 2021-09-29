@@ -110,7 +110,7 @@ class WoZaiXiaoYuanPuncher:
             for i in res['data']:
                 # 判断时段是否有效
                 print("获取到了code=0")
-                # self.doPunchIn(str(i['id']),str(i['logId']))
+                self.doPunchIn(str(i['id']),str(i['logId']))
                 if int(i['state']) == 1:
                     inSeq = True
                     print("可以执行打卡代码了")

@@ -155,11 +155,11 @@ class WoZaiXiaoYuanPuncher:
             "signId": str(signlogId),
             "latitude": 34.102702,
             "longitude": 108.653637,
-            "country": "中国",
-            "province": "陕西省",
-            "city": "西安市",
-            "district": "鄠邑区",
-            "township": "五竹街道"
+            "country": "\u4e2d\u56fd",
+            "province": "\u9655\u897f\u7701",
+            "city": "\u897f\u5b89\u5e02",
+            "district": "\u9120\u9091\u533a",
+            "township": "\u4e94\u7af9\u8857\u9053"
         }
         # 打印values的数据类型,输出<class 'dict'>
         print(type(values))

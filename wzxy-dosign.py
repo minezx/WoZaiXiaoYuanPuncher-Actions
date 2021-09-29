@@ -109,8 +109,6 @@ class WoZaiXiaoYuanPuncher:
             # 遍历每个打卡时段（不同学校的打卡时段数量可能不一样）
             for i in res['data']:
                 # 判断时段是否有效
-                print("获取到了code=0")
-                self.doPunchIn(str(i['id']),str(i['logId']))
                 if int(i['state']) == 1:
                     inSeq = True
                     print("可以执行打卡代码了")
@@ -143,9 +141,6 @@ class WoZaiXiaoYuanPuncher:
     # 参数seq ： 当前打卡的序号
     def doPunchIn(self,signid,signlogId):
         print("正在测试签到...")
-
-
-
         url = "https://student.wozaixiaoyuan.com/sign/doSign.json"
         self.header['Host'] = "student.wozaixiaoyuan.com"
         self.header['Content-Type'] = "application/json"
@@ -155,11 +150,11 @@ class WoZaiXiaoYuanPuncher:
             "signId": str(signid),
             "latitude": 34.102702,
             "longitude": 108.653637,
-            "country": "\u4e2d\u56fd",
-            "province": "\u9655\u897f\u7701",
-            "city": "\u897f\u5b89\u5e02",
-            "district": "\u9120\u9091\u533a",
-            "township": "\u4e94\u7af9\u8857\u9053"
+            "country": "中国",
+            "province": "陕西省",
+            "city": "西安市",
+            "district": "鄠邑区",
+            "township": "五竹街道"
         }
         # 打印values的数据类型,输出<class 'dict'>
         print(type(values))
@@ -179,6 +174,12 @@ class WoZaiXiaoYuanPuncher:
         new_req = json.dumps(change, ensure_ascii=False)
         # 打印接口返回的数据,且以中文编码
         print(new_req)
+        if new_req["code"] == 0:
+            self.status_code = 1
+            print("打卡成功")
+        else:
+            print(response)
+            print("打卡失败")
 
 
 
@@ -208,7 +209,6 @@ class WoZaiXiaoYuanPuncher:
         # else:
         #     print(response)
         #     print("打卡失败")
-                
     # 获取打卡时段
     def getSeq(self):
         seq = self.seq

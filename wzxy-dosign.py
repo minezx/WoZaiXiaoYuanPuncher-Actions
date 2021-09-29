@@ -165,8 +165,7 @@ class WoZaiXiaoYuanPuncher:
         print(type(values))
         print(values)
         # json.dump将python对象编码成json字符串
-        values_json = urlencode(values)
-        # values_json = json.dumps(values)
+        values_json = json.dumps(values)
         # 打印编码成json字符串的values_json的数据类型,输出<class 'str'>
         print(type(values_json))
         print(values_json)

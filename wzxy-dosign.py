@@ -152,7 +152,7 @@ class WoZaiXiaoYuanPuncher:
         self.header['JWSESSION'] = self.getJwsession()
         values = {
             "id": str(signid),
-            "signId": str(signlogId),
+            "logId": str(signlogId),
             "latitude": 34.102702,
             "longitude": 108.653637,
             "country": "中国",

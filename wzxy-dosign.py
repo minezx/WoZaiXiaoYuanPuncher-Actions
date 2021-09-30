@@ -109,11 +109,11 @@ class WoZaiXiaoYuanPuncher:
                 if int(i['state']) == 1:
                     inSeq = True
                     # 判断是否已经签到
-                    if int(i['type']) == 0:
+                    if int(i['type']) == 1:
                         self.doPunchIn(str(i['id']),str(i['logId']))
-                    elif int(i['type']) == 1:
+                    elif int(i['type']) == 0:
                         self.status_code = 2
-                        print("已经打过卡了")
+                        print("已经签过到了")
                 elif int(i['state'])==2:
                     print("未在时间段！")
             # 如果当前时间不在任何一个签到时段内
@@ -158,7 +158,7 @@ class WoZaiXiaoYuanPuncher:
         if res == 1:
             return "✅ 签到成功"
         elif res == 2:
-            return "✅ 你已经打过卡了，无需重复签到"
+            return "✅ 你已经签过到了，无需重复签到"
         elif res == 3:
             return "❌ 签到失败，当前不在签到时间段内"
         elif res == 4:
@@ -178,7 +178,7 @@ class WoZaiXiaoYuanPuncher:
             notifyToken = os.environ['SCT_KEY']
             url = "https://sctapi.ftqq.com/{}.send"
             body = {
-                "title": "⏰ 我在校园签到结果通知[M]：{}".format(notifyResult),
+                "title": "⏰ 我在校园签到结果[M]：{}".format(notifyResult),
                 "desp": "签到项目：点名签到\n\n签到情况：{}\n\n签到时间：{}".format(notifyResult, notifyTime)
             }
             requests.post(url.format(notifyToken), data=body)

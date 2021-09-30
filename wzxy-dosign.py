@@ -109,9 +109,9 @@ class WoZaiXiaoYuanPuncher:
                 if int(i['state']) == 1:
                     inSeq = True
                     # 判断是否已经签到
-                    if int(i['type']) == 1:
+                    if int(i['type']) == 0:
                         self.doPunchIn(str(i['id']),str(i['logId']))
-                    elif int(i['type']) == 0:
+                    elif int(i['type']) == 1:
                         self.status_code = 2
                         print("已经签过到了")
                 elif int(i['state'])==2:
@@ -124,7 +124,7 @@ class WoZaiXiaoYuanPuncher:
     # 执行签到
     # 参数signid：当前签到的signId值。signlogId：当前签到的id值
     def doPunchIn(self,signid,signlogId):
-        print("正在测试签到...")
+        print("正在签到...")
         url = "https://student.wozaixiaoyuan.com/sign/doSign.json"
         self.header['Host'] = "student.wozaixiaoyuan.com"
         self.header['Content-Type'] = "application/json"
@@ -141,9 +141,7 @@ class WoZaiXiaoYuanPuncher:
             "township": os.environ['WZXY_TOWNSHIP']
         }
         data_json = json.dumps(sign_data)
-        # requests库提交数据进行post请求
         req = requests.post(url=url, data=data_json, headers=self.header)
-        # 打印Unicode编码格式的json数据
         req=json.loads(req.text)
         if req["code"] == 0:
             self.status_code = 1

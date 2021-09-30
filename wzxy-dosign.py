@@ -9,13 +9,11 @@ class WoZaiXiaoYuanPuncher:
     def __init__(self):
         # JWSESSION
         self.jwsession = None
-        # 打卡时段
-        self.seq = None
-        # 打卡ID
+        # 签到ID
         self.signid = None
-        # 打卡登录ID
+        # 签到登录ID
         self.signlogId = None
-        # 打卡结果
+        # 签到结果
         self.status_code = 0
         # 登陆接口
         self.loginUrl = "https://gw.wozaixiaoyuan.com/basicinfo/mobile/login/username"
@@ -78,9 +76,9 @@ class WoZaiXiaoYuanPuncher:
             self.jwsession = data['jwsession']  
         return self.jwsession
 
-    # 获取打卡列表，判断当前打卡时间段与打卡情况，符合条件则自动进行打卡
+    # 获取签到列表，判断当前签到时间段与签到情况，符合条件则自动进行签到
     def PunchIn(self):
-        print("获取打卡列表中...")
+        print("获取签到列表中...")
         url = "https://student.wozaixiaoyuan.com/sign/getSignMessage.json"
         self.header['Host'] = "student.wozaixiaoyuan.com"
         self.header['Content-Type'] = "application/x-www-form-urlencoded"
@@ -93,8 +91,7 @@ class WoZaiXiaoYuanPuncher:
         self.session = requests.session()    
         response = self.session.post(url=url, data=data, headers=self.header)
         res = json.loads(response.text)
-        print(res)
-        # 如果 jwsession 无效，则重新 登录 + 打卡
+        # 如果 jwsession 无效，则重新 登录 + 签到
         if res['code'] == -10:
             print('jwsession 无效，将尝试使用账号信息重新登录')
             self.status_code = 4
@@ -106,150 +103,83 @@ class WoZaiXiaoYuanPuncher:
         elif res['code'] == 0:                    
             # 标志时段是否有效
             inSeq = False
-            # 遍历每个打卡时段（不同学校的打卡时段数量可能不一样）
+            # 遍历每个签到时段（不同学校的签到时段数量可能不一样）
             for i in res['data']:
                 # 判断时段是否有效
                 if int(i['state']) == 1:
                     inSeq = True
-                    print("可以执行打卡代码了")
-                    # 保存当前学校的打卡时段
-                    # self.seq = int(i['seq'])
-                    # 判断是否已经打卡
+                    # 判断是否已经签到
                     if int(i['type']) == 0:
-                        print("打卡了打卡了")
-                        ########打卡代码测试#######################
-                        # 保存打卡的id
-                        #self.signid = int(i['id'])
-                        #self.signlogId = int(i['logId'])
                         self.doPunchIn(str(i['id']),str(i['logId']))
-                        ##########################################
-
                     elif int(i['type']) == 1:
                         self.status_code = 2
                         print("已经打过卡了")
                 elif int(i['state'])==2:
                     print("未在时间段！")
-            # 如果当前时间不在任何一个打卡时段内
+            # 如果当前时间不在任何一个签到时段内
             if inSeq == False:            
                 self.status_code = 3
-                print("打卡失败：不在打卡时间段内")
+                print("签到失败：不在签到时间段内")
 
-
-
-
-    # 执行打卡
-    # 参数seq ： 当前打卡的序号
+    # 执行签到
+    # 参数signid：当前签到的signId值。signlogId：当前签到的id值
     def doPunchIn(self,signid,signlogId):
         print("正在测试签到...")
         url = "https://student.wozaixiaoyuan.com/sign/doSign.json"
         self.header['Host'] = "student.wozaixiaoyuan.com"
         self.header['Content-Type'] = "application/json"
         self.header['JWSESSION'] = self.getJwsession()
-        values = {
+        sign_data = {
             "id": str(signlogId),
             "signId": str(signid),
-            "latitude": 34.102702,
-            "longitude": 108.653637,
-            "country": "中国",
-            "province": "陕西省",
-            "city": "西安市",
-            "district": "鄠邑区",
-            "township": "五竹街道"
+            "latitude": os.environ['WZXY_LATITUDE'],
+            "longitude": os.environ['WZXY_LONGITUDE'],
+            "country": os.environ['WZXY_COUNTRY'],
+            "province": os.environ['WZXY_PROVINCE'],
+            "city": os.environ['WZXY_CITY'],
+            "district": os.environ['WZXY_DISTRICT'],
+            "township": os.environ['WZXY_TOWNSHIP']
         }
-        # 打印values的数据类型,输出<class 'dict'>
-        print(type(values))
-        print(values)
-        # json.dump将python对象编码成json字符串
-        values_json = json.dumps(values)
-        # 打印编码成json字符串的values_json的数据类型,输出<class 'str'>
-        print(type(values_json))
-        print(values_json)
+        data_json = json.dumps(sign_data)
         # requests库提交数据进行post请求
-        req = requests.post(url=url, data=values_json, headers=self.header)
+        req = requests.post(url=url, data=data_json, headers=self.header)
         # 打印Unicode编码格式的json数据
-        print(req.text)
-        # 使用json.dumps()时需要对象相应的类型是json可序列化的
-        change = req.json()
-        # json.dumps序列化时对中文默认使用ASCII编码,如果无任何配置则打印的均为ascii字符,输出中文需要指定ensure_ascii=False
-        new_req = json.dumps(change, ensure_ascii=False)
-        # 打印接口返回的数据,且以中文编码
-        print(new_req)
-        if new_req["code"] == 0:
+        req=json.loads(req.text)
+        if req["code"] == 0:
             self.status_code = 1
-            print("打卡成功")
+            print("签到成功")
         else:
             print(response)
-            print("打卡失败")
+            print("签到失败")
 
-
-
-        # url = "https://student.wozaixiaoyuan.com/sign/doSign.json"
-        # self.header['Host'] = "student.wozaixiaoyuan.com"
-        # self.header['Content-Type'] = "application/json"
-        # self.header['JWSESSION'] = self.getJwsession()
-        # sign_data = {
-        #     "id": str(signid),
-        #     "signId": str(signlogId),
-        #     "latitude": 34.102702,
-        #     "longitude": 108.653637,
-        #     "country": "中国",
-        #     "province": "陕西省",
-        #     "city": "西安市",
-        #     "district": "鄠邑区",
-        #     "township": "五竹街道"
-        # }
-        # data = urlencode(sign_data)
-        # self.session = requests.session()    
-        # response = self.session.post(url=url, data=data, headers=self.header)
-        # response = json.loads(response.text)
-        # # 打卡情况
-        # if response["code"] == 0:
-        #     self.status_code = 1
-        #     print("打卡成功")
-        # else:
-        #     print(response)
-        #     print("打卡失败")
-    # 获取打卡时段
-    def getSeq(self):
-        seq = self.seq
-        if seq == 1:
-            return "早打卡"
-        elif seq == 2:
-            return "午打卡"
-        elif seq == 3:
-            return "晚打卡"
-        else:
-            return "非打卡时段"
-    
-    # 获取打卡结果
+    # 获取签到结果
     def getResult(self):
         res = self.status_code
         if res == 1:
-            return "✅ 打卡成功"
+            return "✅ 签到成功"
         elif res == 2:
-            return "✅ 你已经打过卡了，无需重复打卡"
+            return "✅ 你已经打过卡了，无需重复签到"
         elif res == 3:
-            return "❌ 打卡失败，当前不在打卡时间段内"
+            return "❌ 签到失败，当前不在签到时间段内"
         elif res == 4:
-            return "❌ 打卡失败，jwsession 无效"            
+            return "❌ 签到失败，jwsession 无效"            
         elif res == 5:
-            return "❌ 打卡失败，登录错误，请检查账号信息"
+            return "❌ 签到失败，登录错误，请检查账号信息"
         else:
-            return "❌ 打卡失败，发生未知错误，请检查日志"
+            return "❌ 签到失败，发生未知错误，请检查日志"
 
-    # 推送打卡结果
+    # 推送签到结果
     def sendNotification(self):
         notifyTime = utils.getCurrentTime()
         notifyResult = self.getResult()
-        notifySeq = self.getSeq()
 
         if os.environ.get('SCT_KEY'):
             # serverchan 推送
             notifyToken = os.environ['SCT_KEY']
             url = "https://sctapi.ftqq.com/{}.send"
             body = {
-                "title": "⏰ 我在校园打卡结果通知",
-                "desp": "打卡项目：日检日报\n\n打卡情况：{}\n\n打卡时段：{}\n\n打卡时间：{}".format(notifyResult, notifySeq, notifyTime)
+                "title": "⏰ 我在校园签到结果通知[M]：{}".format(notifyResult),
+                "desp": "签到项目：点名签到\n\n签到情况：{}\n\n签到时间：{}".format(notifyResult, notifyTime)
             }
             requests.post(url.format(notifyToken), data=body)
             print("消息经Serverchan-Turbo推送成功")
@@ -258,14 +188,13 @@ class WoZaiXiaoYuanPuncher:
             url = 'http://www.pushplus.plus/send'
             notifyToken = os.environ['PUSHPLUS_TOKEN']
             content = json.dumps({
-                "打卡项目": "日检日报",
-                "打卡情况": notifyResult,
-                "打卡时段": notifySeq,
-                "打卡时间": notifyTime
+                "签到项目": "点名签到",
+                "签到情况": notifyResult,
+                "签到时间": notifyTime
             }, ensure_ascii=False)
             msg = {
                 "token": notifyToken,
-                "title": "⏰ 我在校园打卡结果通知",
+                "title": "⏰ 我在校园签到结果通知",
                 "content": content,
                 "template": "json"
             }
@@ -274,13 +203,13 @@ class WoZaiXiaoYuanPuncher:
         if os.environ.get('BARK_TOKEN'):
             # bark 推送
             notifyToken = os.environ['BARK_TOKEN']
-            req = "{}/{}/{}".format(notifyToken, "⏰ 我在校园打卡（日检日报）结果通知", notifyResult)
+            req = "{}/{}/{}".format(notifyToken, "⏰ 我在校园签到（点名签到）结果通知", notifyResult)
             requests.get(req)
             print("消息经bark推送成功")
 
 
 if __name__ == '__main__':
-    # 找不到cache，登录+打卡
+    # 找不到cache，登录+签到
     wzxy = WoZaiXiaoYuanPuncher()
     if not os.path.exists('.cache'):
         print("找不到cache文件，正在使用账号信息登录...")
@@ -290,6 +219,7 @@ if __name__ == '__main__':
         else:
             print("登陆失败，请检查账号信息")
     else:
-        print("找到cache文件，尝试使用jwsession打卡...")
+        print("找到cache文件，尝试使用jwsession签到...")
         wzxy.PunchIn()
     wzxy.sendNotification()
+

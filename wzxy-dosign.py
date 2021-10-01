@@ -114,6 +114,9 @@ class WoZaiXiaoYuanPuncher:
                     elif int(i['type']) == 1:
                         self.status_code = 2
                         print("已经签过到了")
+                    elif int(i['type']) == 2:
+                        self.status_code = 6
+                        print("请假了")
                 elif int(i['state'])==2:
                     print("未在时间段！")
             # 如果当前时间不在任何一个签到时段内
@@ -163,6 +166,8 @@ class WoZaiXiaoYuanPuncher:
             return "❌ 签到失败，jwsession 无效"            
         elif res == 5:
             return "❌ 签到失败，登录错误，请检查账号信息"
+        elif res == 6:
+            return "✅ 你请假了，无需签到"
         else:
             return "❌ 签到失败，发生未知错误，请检查日志"
 

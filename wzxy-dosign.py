@@ -188,7 +188,7 @@ class WoZaiXiaoYuanPuncher:
             notifyToken = os.environ['SCT_KEY']
             url = "https://sctapi.ftqq.com/{}.send"
             body = {
-                "title": "⏰ 我在校园签到结果[X]：{}".format(notifyResult),
+                "title": "⏰ 我在校园签到结果[M]：{}".format(notifyResult),
                 "desp": "签到项目：点名签到\n\n签到情况：{}\n\n签到时间：{}".format(notifyResult, notifyTime)
             }
             requests.post(url.format(notifyToken), data=body)

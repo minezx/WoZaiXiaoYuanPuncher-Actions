@@ -2,8 +2,16 @@
 import requests
 import json
 import os
+import time
+import hmac
+import hashlib
+import base64
 import utils
+import urllib
+import urllib.parse
 from urllib.parse import urlencode
+from urllib3.util import Retry
+
 
 class WoZaiXiaoYuanPuncher:
     def __init__(self):
@@ -21,7 +29,7 @@ class WoZaiXiaoYuanPuncher:
         self.header = {
             "Accept-Encoding": "gzip, deflate, br",
             "Connection": "keep-alive",
-            "User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36 MicroMessenger/7.0.9.501 NetType/WIFI MiniProgramEnv/Windows WindowsWechat",
+            "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.13(0x18000d32) NetType/WIFI Language/zh_CN miniProgram",
             "Content-Type": "application/json;charset=UTF-8",
             "Content-Length": "2",
             "Host": "gw.wozaixiaoyuan.com",
@@ -56,16 +64,15 @@ class WoZaiXiaoYuanPuncher:
         if not os.path.exists('.cache'): 
             print("正在创建cache储存目录与文件...")
             os.mkdir('.cache')
-            data = {"jwsession":jwsession}
+            data = {"jwsession": jwsession}
         elif not os.path.exists('.cache/cache.json'):
             print("正在创建cache文件...")
-            data = {"jwsession":jwsession}
+            data = {"jwsession": jwsession}
         # 如果找到cache,读取cache并更新jwsession
         else:
             print("找到cache文件，正在更新cache中的jwsession...")
             data = utils.processJson('.cache/cache.json').read()
-            for item in data:
-                item['jwsession'] = jwsession                 
+            data['jwsession'] = jwsession                 
         utils.processJson(".cache/cache.json").write(data)
         self.jwsession = data['jwsession']  
     
@@ -181,7 +188,7 @@ class WoZaiXiaoYuanPuncher:
             notifyToken = os.environ['SCT_KEY']
             url = "https://sctapi.ftqq.com/{}.send"
             body = {
-                "title": "⏰ 我在校园签到结果[M]：{}".format(notifyResult),
+                "title": "⏰ 我在校园签到结果[X]：{}".format(notifyResult),
                 "desp": "签到项目：点名签到\n\n签到情况：{}\n\n签到时间：{}".format(notifyResult, notifyTime)
             }
             requests.post(url.format(notifyToken), data=body)
@@ -225,4 +232,5 @@ if __name__ == '__main__':
         print("找到cache文件，尝试使用jwsession签到...")
         wzxy.PunchIn()
     wzxy.sendNotification()
+
 

@@ -206,7 +206,7 @@ class WoZaiXiaoYuanPuncher:
             }, ensure_ascii=False)
             msg = {
                 "token": notifyToken,
-                "title": "⏰ 我在校园签到结果通知",
+                "title": "⏰ 我在校园签到结果[M]:{}".format(notifyResult),
                 "content": content,
                 "template": "json"
             }

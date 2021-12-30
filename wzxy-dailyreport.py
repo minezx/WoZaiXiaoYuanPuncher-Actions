@@ -214,7 +214,7 @@ class WoZaiXiaoYuanPuncher:
             }, ensure_ascii=False)
             msg = {
                 "token": notifyToken,
-                "title": "⏰ 我在校园打卡结果通知",
+                "title": "⏰ 我在校园打卡结果[M]：",
                 "content": content,
                 "template": "json"
             }

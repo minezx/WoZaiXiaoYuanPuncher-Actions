@@ -92,12 +92,14 @@ class WoZaiXiaoYuanPuncher:
         res = json.loads(response.text)
         # 如果 jwsession 无效，则重新 登录 + 打卡
         if res['code'] == -10:
+            print(res)
             print('jwsession 无效，将尝试使用账号信息重新登录')
             self.status_code = 4
             loginStatus = self.login()
             if loginStatus:
                 self.PunchIn()
             else:
+                print(res)
                 print("重新登录失败，请检查账号信息")     
         elif res['code'] == 0:                    
             # 标志时段是否有效
@@ -195,7 +197,7 @@ class WoZaiXiaoYuanPuncher:
             notifyToken = os.environ['SCT_KEY']
             url = "https://sctapi.ftqq.com/{}.send"
             body = {
-                "title": "⏰ 我在校园打卡结果[M]：{}".format(notifyResult),
+                "title": "⏰ 我在校园打卡结果[X]：{}".format(notifyResult),
                 "desp": "打卡项目：日检日报\n\n打卡情况：{}\n\n打卡时段：{}\n\n打卡时间：{}".format(notifyResult, notifySeq, notifyTime)
             }
             requests.post(url.format(notifyToken), data=body)
@@ -216,8 +218,13 @@ class WoZaiXiaoYuanPuncher:
                 "content": content,
                 "template": "json"
             }
-            requests.post(url, data=msg)
-            print("消息经pushplus推送成功")
+            body=json.dumps(msg).encode(encoding='utf-8')
+            headers = {'Content-Type':'application/json'}
+            r = requests.post(url, data=body, headers=headers).json()
+            if r["code"] == 200:
+                print("消息经pushplus推送成功")
+            else:
+                print("消息经pushplus推送失败，请检查token是否配置正确")
         if os.environ.get('DD_BOT_ACCESS_TOKEN'):
             # 钉钉推送
             DD_BOT_ACCESS_TOKEN = os.environ["DD_BOT_ACCESS_TOKEN"]
@@ -270,4 +277,3 @@ if __name__ == '__main__':
         print("找到cache文件，尝试使用jwsession打卡...")
         wzxy.PunchIn()
     wzxy.sendNotification()
-

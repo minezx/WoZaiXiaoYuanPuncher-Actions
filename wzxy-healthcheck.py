@@ -184,6 +184,5 @@ if __name__ == '__main__':
     else:
         print("找到cache文件，尝试使用jwsession打卡...")
         wzxy.doPunchIn()
-        print("测试一下")
     wzxy.sendNotification()
     

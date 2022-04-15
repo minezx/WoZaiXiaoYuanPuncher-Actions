@@ -145,160 +145,136 @@
                 <img src="./images/search.png" alt="">
                 <input id="leftInputBox" type="text" onkeyup="fileSearch();" placeholder="搜索">
             </div>
-            <div class="fileTreeContainer">
-                <span style="width: 200px;"></span>
-                <ul id="fileTreeUl" style="padding: 0; margin: 0; list-style-type: none;">
+            <div id="fileTreeBox" class="fileTreeContainer">
+                <hr style="width: 200px; margin: 0px; visibility: hidden;"/>
                     <details class="categoryBox" open>
                         <summary class="category">例题</summary>
-                        <div>
                             <details class="chapterBox" open>
                                 <summary class="chapter">第一章</summary>
-                                <div>
-                                </div>
                             </details>
                             <details class="chapterBox" open>
                                 <summary class="chapter">第二章</summary>
-                                <div>
-                                    <li><a class="item" href="../例题/2.1.第一个HTML5页面.htm" target="contentFrame">2.1.第一个HTml页面</a></li>
-                                    <li><a class="item" href="../例题/2.2.标题标记title.html" target="contentFrame">2.2.标题标记title</a></li>
-                                    <li><a class="item" href="../例题/2.3.1.设置关键字.html" target="contentFrame">2.3.1.设置关键字</a></li>
-                                    <li><a class="item" href="../例题/2.3.2.设置页面说明.html" target="contentFrame">2.3.2.设置页面说明</a></li>
-                                    <li><a class="item" href="../例题/2.3.6.定时跳转例.html" target="contentFrame">2.3.6.定时跳转例</a></li>
-                                    <li><a class="item" href="../例题/2.5.1.标题标记.html" target="contentFrame">2.5.1.标题标记</a></li>
-                                    <li><a class="item" href="../例题/2.5.2.标题字的对齐.html" target="contentFrame">2.5.2.标题字的对齐</a></li>
-                                    <li><a class="item" href="../例题/2.6.1.段落标记.html" target="contentFrame">2.6.1.段落标记</a></li>
-                                    <li><a class="item" href="../例题/2.6.2.换行标记.html" target="contentFrame">2.6.2.换行标记</a></li>
-                                    <li><a class="item" href="../例题/2.7.水平线.html" target="contentFrame">2.7.水平线</a></li>
-                                    <li><a class="item" href="../例题/2.8.1.插入空格.html" target="contentFrame">2.8.1.插入空格</a></li>
-                                    <li><a class="item" href="../例题/2.13.基本的文本网页.html" target="contentFrame">2.13.基本的文本网页</a></li>
-                                </div>
+                                    <span><a class="item" href="../例题/2.1.第一个HTML5页面.htm" target="contentFrame">2.1.第一个HTml页面</a></span>
+                                    <span><a class="item" href="../例题/2.2.标题标记title.html" target="contentFrame">2.2.标题标记title</a></span>
+                                    <span><a class="item" href="../例题/2.3.1.设置关键字.html" target="contentFrame">2.3.1.设置关键字</a></span>
+                                    <span><a class="item" href="../例题/2.3.2.设置页面说明.html" target="contentFrame">2.3.2.设置页面说明</a></span>
+                                    <span><a class="item" href="../例题/2.3.6.定时跳转例.html" target="contentFrame">2.3.6.定时跳转例</a></span>
+                                    <span><a class="item" href="../例题/2.5.1.标题标记.html" target="contentFrame">2.5.1.标题标记</a></span>
+                                    <span><a class="item" href="../例题/2.5.2.标题字的对齐.html" target="contentFrame">2.5.2.标题字的对齐</a></span>
+                                    <span><a class="item" href="../例题/2.6.1.段落标记.html" target="contentFrame">2.6.1.段落标记</a></span>
+                                    <span><a class="item" href="../例题/2.6.2.换行标记.html" target="contentFrame">2.6.2.换行标记</a></span>
+                                    <span><a class="item" href="../例题/2.7.水平线.html" target="contentFrame">2.7.水平线</a></span>
+                                    <span><a class="item" href="../例题/2.8.1.插入空格.html" target="contentFrame">2.8.1.插入空格</a></span>
+                                    <span><a class="item" href="../例题/2.13.基本的文本网页.html" target="contentFrame">2.13.基本的文本网页</a></span>
                             </details>
                             <details class="chapterBox">
                                 <summary class="chapter">第三章</summary>
-                                <div>
-                                    <li><a class="item" href="../例题/3.2.1.内部链接.html" target="contentFrame">3.2.1.内部链接</a></li>
-                                    <li><a class="item" href="../例题/3.2.2.内部链接目标.html" target="contentFrame">3.2.2.内部链接目标</a></li>
-                                    <li><a class="item" href="../例题/3.3.1.创建锚点.html" target="contentFrame">3.3.1.创建锚点</a></li>
-                                    <li><a class="item" href="../例题/3.3.2.创建锚点链接.html" target="contentFrame">3.3.2.创建锚点链接</a></li>
-                                    <li><a class="item" href="../例题/3.3.3.链接到其他页面的锚点.html" target="contentFrame">3.3.3.链接到其他页面的锚点</a></li>
-                                    <li><a class="item" href="../例题/3.4.1.链接到外部链接.html" target="contentFrame">3.4.1.链接到外部链接</a></li>
-                                    <li><a class="item" href="../例题/3.4.2.链接到E-mail.html" target="contentFrame">3.4.2.链接到E-mail</a></li>
-                                    <li><a class="item" href="../例题/3.4.5.下载文件.html" target="contentFrame">3.4.5.下载文件</a></li>
-                                </div>
+                                    <span><a class="item" href="../例题/3.2.1.内部链接.html" target="contentFrame">3.2.1.内部链接</a></span>
+                                    <span><a class="item" href="../例题/3.2.2.内部链接目标.html" target="contentFrame">3.2.2.内部链接目标</a></span>
+                                    <span><a class="item" href="../例题/3.3.1.创建锚点.html" target="contentFrame">3.3.1.创建锚点</a></span>
+                                    <span><a class="item" href="../例题/3.3.2.创建锚点链接.html" target="contentFrame">3.3.2.创建锚点链接</a></span>
+                                    <span><a class="item" href="../例题/3.3.3.链接到其他页面的锚点.html" target="contentFrame">3.3.3.链接到其他页面的锚点</a></span>
+                                    <span><a class="item" href="../例题/3.4.1.链接到外部链接.html" target="contentFrame">3.4.1.链接到外部链接</a></span>
+                                    <span><a class="item" href="../例题/3.4.2.链接到E-mail.html" target="contentFrame">3.4.2.链接到E-mail</a></span>
+                                    <span><a class="item" href="../例题/3.4.5.下载文件.html" target="contentFrame">3.4.5.下载文件</a></span>
                             </details>
                             <details class="chapterBox">
                                 <summary class="chapter">第四章</summary>
-                                <div>
-                                    <li><a class="item" href="../例题/4.2.2.插入图像标记.html" target="contentFrame">4.2.2.插入图像标记</a></li>
-                                    <li><a class="item" href="../例题/4.3.1.图像链接.html" target="contentFrame">4.3.1.图像链接</a></li>
-                                    <li><a class="item" href="../例题/4.3.2.图像热区链接.html" target="contentFrame">4.3.2.图像热区链接</a></li>
-                                </div>
+                                    <span><a class="item" href="../例题/4.2.2.插入图像标记.html" target="contentFrame">4.2.2.插入图像标记</a></span>
+                                    <span><a class="item" href="../例题/4.3.1.图像链接.html" target="contentFrame">4.3.1.图像链接</a></span>
+                                    <span><a class="item" href="../例题/4.3.2.图像热区链接.html" target="contentFrame">4.3.2.图像热区链接</a></span>
                             </details>
                             <details class="chapterBox">
                                 <summary class="chapter">第五章</summary>
-                                <div>
-                                    <li><a class="item" href="../例题/5.2.1.有序列表项.html" target="contentFrame">5.2.1.有序列表项</a></li>
-                                    <li><a class="item" href="../例题/5.2.2.有序列表类型.html" target="contentFrame">5.2.2.有序列表类型</a></li>
-                                    <li><a class="item" href="../例题/5.2.3.有序列表起始数值.html" target="contentFrame">5.2.3.有序列表起始数值</a></li>
-                                    <li><a class="item" href="../例题/5.3.1.无序列表项.html" target="contentFrame">5.3.1.无序列表项</a></li>
-                                    <li><a class="item" href="../例题/5.3.2.无序列表符号.html" target="contentFrame">5.3.2.无序列表符号</a></li>
-                                    <li><a class="item" href="../例题/5.3.3.定义列表标记.html" target="contentFrame">5.3.3.定义列表标记</a></li>
-                                    <li><a class="item" href="../例题/5.3.4.菜单列表.html" target="contentFrame">5.3.4.菜单列表</a></li>
-                                </div>
+                                    <span><a class="item" href="../例题/5.2.1.有序列表项.html" target="contentFrame">5.2.1.有序列表项</a></span>
+                                    <span><a class="item" href="../例题/5.2.2.有序列表类型.html" target="contentFrame">5.2.2.有序列表类型</a></span>
+                                    <span><a class="item" href="../例题/5.2.3.有序列表起始数值.html" target="contentFrame">5.2.3.有序列表起始数值</a></span>
+                                    <span><a class="item" href="../例题/5.3.1.无序列表项.html" target="contentFrame">5.3.1.无序列表项</a></span>
+                                    <span><a class="item" href="../例题/5.3.2.无序列表符号.html" target="contentFrame">5.3.2.无序列表符号</a></span>
+                                    <span><a class="item" href="../例题/5.3.3.定义列表标记.html" target="contentFrame">5.3.3.定义列表标记</a></span>
+                                    <span><a class="item" href="../例题/5.3.4.菜单列表.html" target="contentFrame">5.3.4.菜单列表</a></span>
                             </details>
                             <details class="chapterBox">
                                 <summary class="chapter">第六章</summary>
-                                <div>
-                                    <li><a class="item" href="../例题/6.1.1.表格的基本构成.html" target="contentFrame">6.1.1.表格的基本构成</a></li>
-                                    <li><a class="item" href="../例题/6.1.2.表格的标题.html" target="contentFrame">6.1.2.表格的标题</a></li>
-                                    <li><a class="item" href="../例题/6.1.3.表格的表头.html" target="contentFrame">6.1.3.表格的表头</a></li>
-                                    <li><a class="item" href="../例题/6.2.1.表格的宽度.html" target="contentFrame">6.2.1.表格的宽度</a></li>
-                                    <li><a class="item" href="../例题/6.2.2.表格的高度.html" target="contentFrame">6.2.2.表格的高度</a></li>
-                                    <li><a class="item" href="../例题/6.2.3.表格的对齐.html" target="contentFrame">6.2.3.表格的对齐</a></li>
-                                    <li><a class="item" href="../例题/6.3.2.表格的边框颜色.html" target="contentFrame">6.3.2.表格的边框颜色</a></li>
-                                    <li><a class="item" href="../例题/6.3.3.表格的内框宽度.html" target="contentFrame">6.3.3.表格的内框宽度</a></li>
-                                    <li><a class="item" href="../例题/6.3.4.表格内文字与边框距离.html" target="contentFrame">6.3.4.表格内文字与边框距离</a></li>
-                                    <li><a class="item" href="../例题/6.4.1.表格背景色.html" target="contentFrame">6.4.1.表格背景色</a></li>
-                                    <li><a class="item" href="../例题/6.4.2.表格背景图像.html" target="contentFrame">6.4.2.表格背景图像</a></li>
-                                    <li><a class="item" href="../例题/6.5.1.行高的控制.html" target="contentFrame">6.5.1.行高的控制</a></li>
-                                    <li><a class="item" href="../例题/6.5.2.单元格边框颜色.html" target="contentFrame">6.5.2.单元格边框颜色</a></li>
-                                    <li><a class="item" href="../例题/6.6.1.单元格大小.html" target="contentFrame">6.6.1.单元格大小</a></li>
-                                    <li><a class="item" href="../例题/6.6.1.跨行&列合并.html" target="contentFrame">6.6.1.跨行&列合并</a></li>
-                                    <li><a class="item" href="../例题/6.6.2.水平跨度.html" target="contentFrame">6.6.2.水平跨度</a></li>
-                                    <li><a class="item" href="../例题/6.6.3.垂直跨度.html" target="contentFrame">6.6.3.垂直跨度</a></li>
-                                    <li><a class="item" href="../例题/6.6.4.单元格内容对齐方式.html" target="contentFrame">6.6.4.单元格内容对齐方式</a></li>
-                                    <li><a class="item" href="../例题/6.6.5.单元格的背景颜色.html" target="contentFrame">6.6.5.单元格的背景颜色</a></li>
-                                    <li><a class="item" href="../例题/6.6.6.单元格的边框颜色.html" target="contentFrame">6.6.6.单元格的边框颜色</a></li>
-                                    <li><a class="item" href="../例题/6.6.7.单元格的亮边框颜色.html" target="contentFrame">6.6.7.单元格的亮边框颜色</a></li>
-                                    <li><a class="item" href="../例题/6.6.8.单元格的暗边框颜色.html" target="contentFrame">6.6.8.单元格的暗边框颜色</a></li>
-                                    <li><a class="item" href="../例题/6.6.9.单元格的背景图像.html" target="contentFrame">6.6.9.单元格的背景图像</a></li>
-                                    <li><a class="item" href="../例题/6.7.1.表格的表首.html" target="contentFrame">6.7.1.表格的表首</a></li>
-                                    <li><a class="item" href="../例题/6.7.2.表格的主体.html" target="contentFrame">6.7.2.表格的主体</a></li>
-                                    <li><a class="item" href="../例题/6.7.3.表格的表尾.html" target="contentFrame">6.7.3.表格的表尾</a></li>
-                                </div>
+                                    <span><a class="item" href="../例题/6.1.1.表格的基本构成.html" target="contentFrame">6.1.1.表格的基本构成</a></span>
+                                    <span><a class="item" href="../例题/6.1.2.表格的标题.html" target="contentFrame">6.1.2.表格的标题</a></span>
+                                    <span><a class="item" href="../例题/6.1.3.表格的表头.html" target="contentFrame">6.1.3.表格的表头</a></span>
+                                    <span><a class="item" href="../例题/6.2.1.表格的宽度.html" target="contentFrame">6.2.1.表格的宽度</a></span>
+                                    <span><a class="item" href="../例题/6.2.2.表格的高度.html" target="contentFrame">6.2.2.表格的高度</a></span>
+                                    <span><a class="item" href="../例题/6.2.3.表格的对齐.html" target="contentFrame">6.2.3.表格的对齐</a></span>
+                                    <span><a class="item" href="../例题/6.3.2.表格的边框颜色.html" target="contentFrame">6.3.2.表格的边框颜色</a></span>
+                                    <span><a class="item" href="../例题/6.3.3.表格的内框宽度.html" target="contentFrame">6.3.3.表格的内框宽度</a></span>
+                                    <span><a class="item" href="../例题/6.3.4.表格内文字与边框距离.html" target="contentFrame">6.3.4.表格内文字与边框距离</a></span>
+                                    <span><a class="item" href="../例题/6.4.1.表格背景色.html" target="contentFrame">6.4.1.表格背景色</a></span>
+                                    <span><a class="item" href="../例题/6.4.2.表格背景图像.html" target="contentFrame">6.4.2.表格背景图像</a></span>
+                                    <span><a class="item" href="../例题/6.5.1.行高的控制.html" target="contentFrame">6.5.1.行高的控制</a></span>
+                                    <span><a class="item" href="../例题/6.5.2.单元格边框颜色.html" target="contentFrame">6.5.2.单元格边框颜色</a></span>
+                                    <span><a class="item" href="../例题/6.6.1.单元格大小.html" target="contentFrame">6.6.1.单元格大小</a></span>
+                                    <span><a class="item" href="../例题/6.6.1.跨行&列合并.html" target="contentFrame">6.6.1.跨行&列合并</a></span>
+                                    <span><a class="item" href="../例题/6.6.2.水平跨度.html" target="contentFrame">6.6.2.水平跨度</a></span>
+                                    <span><a class="item" href="../例题/6.6.3.垂直跨度.html" target="contentFrame">6.6.3.垂直跨度</a></span>
+                                    <span><a class="item" href="../例题/6.6.4.单元格内容对齐方式.html" target="contentFrame">6.6.4.单元格内容对齐方式</a></span>
+                                    <span><a class="item" href="../例题/6.6.5.单元格的背景颜色.html" target="contentFrame">6.6.5.单元格的背景颜色</a></span>
+                                    <span><a class="item" href="../例题/6.6.6.单元格的边框颜色.html" target="contentFrame">6.6.6.单元格的边框颜色</a></span>
+                                    <span><a class="item" href="../例题/6.6.7.单元格的亮边框颜色.html" target="contentFrame">6.6.7.单元格的亮边框颜色</a></span>
+                                    <span><a class="item" href="../例题/6.6.8.单元格的暗边框颜色.html" target="contentFrame">6.6.8.单元格的暗边框颜色</a></span>
+                                    <span><a class="item" href="../例题/6.6.9.单元格的背景图像.html" target="contentFrame">6.6.9.单元格的背景图像</a></span>
+                                    <span><a class="item" href="../例题/6.7.1.表格的表首.html" target="contentFrame">6.7.1.表格的表首</a></span>
+                                    <span><a class="item" href="../例题/6.7.2.表格的主体.html" target="contentFrame">6.7.2.表格的主体</a></span>
+                                    <span><a class="item" href="../例题/6.7.3.表格的表尾.html" target="contentFrame">6.7.3.表格的表尾</a></span>
                             </details>
                             <details class="chapterBox">
                                 <summary class="chapter">第七章</summary>
-                                <div>
-                                    <li><a class="item" href="../例题/7.1.1.表单域.html" target="contentFrame">7.1.1.表单域</a></li>
-                                    <li><a class="item" href="../例题/7.2.1.文字字段.html" target="contentFrame">7.2.1.文字字段</a></li>
-                                    <li><a class="item" href="../例题/7.2.10.文件域.html" target="contentFrame">7.2.10.文件域</a></li>
-                                    <li><a class="item" href="../例题/7.2.2.密码域.html" target="contentFrame">7.2.2.密码域</a></li>
-                                    <li><a class="item" href="../例题/7.2.3.单选按钮.html" target="contentFrame">7.2.3.单选按钮</a></li>
-                                    <li><a class="item" href="../例题/7.2.4.复选框.html" target="contentFrame">7.2.4.复选框</a></li>
-                                    <li><a class="item" href="../例题/7.2.5.普通按钮.html" target="contentFrame">7.2.5.普通按钮</a></li>
-                                    <li><a class="item" href="../例题/7.2.6.提交按钮.html" target="contentFrame">7.2.6.提交按钮</a></li>
-                                    <li><a class="item" href="../例题/7.2.7.重置按钮.html" target="contentFrame">7.2.7.重置按钮</a></li>
-                                    <li><a class="item" href="../例题/7.2.8.图像域.html" target="contentFrame">7.2.8.图像域</a></li>
-                                    <li><a class="item" href="../例题/7.2.9.隐藏域.html" target="contentFrame">7.2.9.隐藏域</a></li>
-                                    <li><a class="item" href="../例题/7.3-pri unfinished.html" target="contentFrame">7.3-pri unfinished</a></li>
-                                    <li><a class="item" href="../例题/7.3.1.下拉菜单.html" target="contentFrame">7.3.1.下拉菜单</a></li>
-                                    <li><a class="item" href="../例题/7.3.2.列表项.html" target="contentFrame">7.3.2.列表项</a></li>
-                                    <li><a class="item" href="../例题/7.4.文本域.html" target="contentFrame">7.4.文本域</a></li>
-                                    <li><a class="item" href="../例题/7.5.id标记.html" target="contentFrame">7.5.id标记</a></li>
-                                    <li><a class="item" href="../例题/7.6.创建表单实例.html" target="contentFrame">7.6.创建表单实例</a></li>
-                                </div>
+                                    <span><a class="item" href="../例题/7.1.1.表单域.html" target="contentFrame">7.1.1.表单域</a></span>
+                                    <span><a class="item" href="../例题/7.2.1.文字字段.html" target="contentFrame">7.2.1.文字字段</a></span>
+                                    <span><a class="item" href="../例题/7.2.10.文件域.html" target="contentFrame">7.2.10.文件域</a></span>
+                                    <span><a class="item" href="../例题/7.2.2.密码域.html" target="contentFrame">7.2.2.密码域</a></span>
+                                    <span><a class="item" href="../例题/7.2.3.单选按钮.html" target="contentFrame">7.2.3.单选按钮</a></span>
+                                    <span><a class="item" href="../例题/7.2.4.复选框.html" target="contentFrame">7.2.4.复选框</a></span>
+                                    <span><a class="item" href="../例题/7.2.5.普通按钮.html" target="contentFrame">7.2.5.普通按钮</a></span>
+                                    <span><a class="item" href="../例题/7.2.6.提交按钮.html" target="contentFrame">7.2.6.提交按钮</a></span>
+                                    <span><a class="item" href="../例题/7.2.7.重置按钮.html" target="contentFrame">7.2.7.重置按钮</a></span>
+                                    <span><a class="item" href="../例题/7.2.8.图像域.html" target="contentFrame">7.2.8.图像域</a></span>
+                                    <span><a class="item" href="../例题/7.2.9.隐藏域.html" target="contentFrame">7.2.9.隐藏域</a></span>
+                                    <span><a class="item" href="../例题/7.3-pri unfinished.html" target="contentFrame">7.3-pri unfinished</a></span>
+                                    <span><a class="item" href="../例题/7.3.1.下拉菜单.html" target="contentFrame">7.3.1.下拉菜单</a></span>
+                                    <span><a class="item" href="../例题/7.3.2.列表项.html" target="contentFrame">7.3.2.列表项</a></span>
+                                    <span><a class="item" href="../例题/7.4.文本域.html" target="contentFrame">7.4.文本域</a></span>
+                                    <span><a class="item" href="../例题/7.5.id标记.html" target="contentFrame">7.5.id标记</a></span>
+                                    <span><a class="item" href="../例题/7.6.创建表单实例.html" target="contentFrame">7.6.创建表单实例</a></span>
                             </details>
                             <details class="chapterBox">
                                 <summary class="chapter">第八章</summary>
-                                <div>
-                                    <li><a class="item" href="../例题/8.1.1.滚动标记.html" target="contentFrame">8.1.1.滚动标记</a></li>
-                                    <li><a class="item" href="../例题/8.1.2.滚动方向.html" target="contentFrame">8.1.2.滚动方向</a></li>
-                                    <li><a class="item" href="../例题/8.1.3.滚动方式.html" target="contentFrame">8.1.3.滚动方式</a></li>
-                                    <li><a class="item" href="../例题/8.1.4.滚动速度.html" target="contentFrame">8.1.4.滚动速度</a></li>
-                                    <li><a class="item" href="../例题/8.1.5.滚动延迟.html" target="contentFrame">8.1.5.滚动延迟</a></li>
-                                    <li><a class="item" href="../例题/8.1.6.滚动循环.html" target="contentFrame">8.1.6.滚动循环</a></li>
-                                    <li><a class="item" href="../例题/8.1.7.滚动范围.html" target="contentFrame">8.1.7.滚动范围</a></li>
-                                    <li><a class="item" href="../例题/8.1.8.滚动背景颜色.html" target="contentFrame">8.1.8.滚动背景颜色</a></li>
-                                    <li><a class="item" href="../例题/8.1.9.滚动空白空间.html" target="contentFrame">8.1.9.滚动空白空间</a></li>
-                                    <li><a class="item" href="../例题/8.2.1.插入flash.html" target="contentFrame">8.2.1.插入flash</a></li>
-                                    <li><a class="item" href="../例题/8.2.2.插入音频和视频文件.html" target="contentFrame">8.2.2.插入音频和视频文件</a></li>
-                                </div>
+                                    <span><a class="item" href="../例题/8.1.1.滚动标记.html" target="contentFrame">8.1.1.滚动标记</a></span>
+                                    <span><a class="item" href="../例题/8.1.2.滚动方向.html" target="contentFrame">8.1.2.滚动方向</a></span>
+                                    <span><a class="item" href="../例题/8.1.3.滚动方式.html" target="contentFrame">8.1.3.滚动方式</a></span>
+                                    <span><a class="item" href="../例题/8.1.4.滚动速度.html" target="contentFrame">8.1.4.滚动速度</a></span>
+                                    <span><a class="item" href="../例题/8.1.5.滚动延迟.html" target="contentFrame">8.1.5.滚动延迟</a></span>
+                                    <span><a class="item" href="../例题/8.1.6.滚动循环.html" target="contentFrame">8.1.6.滚动循环</a></span>
+                                    <span><a class="item" href="../例题/8.1.7.滚动范围.html" target="contentFrame">8.1.7.滚动范围</a></span>
+                                    <span><a class="item" href="../例题/8.1.8.滚动背景颜色.html" target="contentFrame">8.1.8.滚动背景颜色</a></span>
+                                    <span><a class="item" href="../例题/8.1.9.滚动空白空间.html" target="contentFrame">8.1.9.滚动空白空间</a></span>
+                                    <span><a class="item" href="../例题/8.2.1.插入flash.html" target="contentFrame">8.2.1.插入flash</a></span>
+                                    <span><a class="item" href="../例题/8.2.2.插入音频和视频文件.html" target="contentFrame">8.2.2.插入音频和视频文件</a></span>
                             </details>
                             <details class="chapterBox">
                                 <summary class="chapter">图</summary>
-                                <div>
-                                    <li><a class="item" href="../例题/P-Hyperlink.html" target="contentFrame">P-Hyperlink</a></li>
-                                    <li><a class="item" href="../例题/P-MenuMonday.html" target="contentFrame">P-MenuMonday</a></li>
-                                    <li><a class="item" href="../例题/P-SignPage.html" target="contentFrame">P-SignPage</a></li>
-                                    <li><a class="item" href="../例题/P3.36.html" target="contentFrame">P3.36</a></li>
-                                    <li><a class="item" href="../例题/P6.24.html" target="contentFrame">P6.24</a></li>
-                                    <li><a class="item" href="../例题/P7.16.html" target="contentFrame">P7.16</a></li>
-                                    <li><a class="item" href="../例题/P8.14.html" target="contentFrame">P8.14</a></li>
-                                </div>
+                                    <span><a class="item" href="../例题/P-Hyperlink.html" target="contentFrame">P-Hyperlink</a></span>
+                                    <span><a class="item" href="../例题/P-MenuMonday.html" target="contentFrame">P-MenuMonday</a></span>
+                                    <span><a class="item" href="../例题/P-SignPage.html" target="contentFrame">P-SignPage</a></span>
+                                    <span><a class="item" href="../例题/P3.36.html" target="contentFrame">P3.36</a></span>
+                                    <span><a class="item" href="../例题/P6.24.html" target="contentFrame">P6.24</a></span>
+                                    <span><a class="item" href="../例题/P7.16.html" target="contentFrame">P7.16</a></span>
+                                    <span><a class="item" href="../例题/P8.14.html" target="contentFrame">P8.14</a></span>
                             </details>
-                        </div>
                     </details>
                     <details class="categoryBox">
                         <summary class="category">作业</summary>
-                        <div>
-                            <li><a class="item" href="../作业/Chr-5.html" target="contentFrame">第五章章末题</a></li>
-                            <li><a class="item" href="../作业/ClassSheet.html" target="contentFrame">课程表</a></li>
-                            <li><a class="item" href="../作业/News.html" target="contentFrame">新闻页面</a></li>
-                            <li><a class="item" href="../作业/Personal.html" target="contentFrame">个人简历</a></li>
-                        </div>
+                            <span><a class="item" href="../作业/Chr-5.html" target="contentFrame">第五章章末题</a></span>
+                            <span><a class="item" href="../作业/ClassSheet.html" target="contentFrame">课程表</a></span>
+                            <span><a class="item" href="../作业/News.html" target="contentFrame">新闻页面</a></span>
+                            <span><a class="item" href="../作业/Personal.html" target="contentFrame">个人简历</a></span>
                     </details>
-                </ul>
             </div>
         </div>
         <div class="content" style="width: 100%;">
@@ -308,20 +284,38 @@
 </body>
 <script>
     function fileSearch() {
-        // 声明变量
-        var input, filter, ul, li, a, i, txtValue;
+        var input, inputText, listContainer, list, a, aValue, i, summary, j, details, k;
         input = document.getElementById('leftInputBox');
-        filter = input.value.toUpperCase();
-        ul = document.getElementById("fileTreeUl");
-        li = ul.getElementsByTagName('li');
-        // 循环遍历所有列表项，并隐藏那些与搜索查询不匹配的项
-        for (i = 0; i < li.length; i++) {
-            a = li[i].getElementsByTagName("a")[0];
-            txtValue = a.textContent || a.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                li[i].style.display = "";
+        inputText = input.value.toUpperCase();
+        listContainer = document.getElementById("fileTreeBox");
+        summary = listContainer.getElementsByTagName("summary");
+        details = listContainer.getElementsByTagName("details");
+        if (inputText == '') {
+            for (j = 0; j < summary.length; j++) {
+                summary[j].style.display = ""
+            }
+            for (k = 0; k < details.length; k++) {
+                if (k != 0 && k != 2) {
+                    details[k].open = 0;
+                }
+            }
+        } else {
+            for (j = 0; j < summary.length; j++) {
+                summary[j].style.display = "none"
+            }
+            for (k = 0; k < details.length; k++) {
+                details[k].open = 1;
+            }
+        }
+        list = listContainer.getElementsByTagName("span");
+        for (i = 0; i < list.length; i++) {
+            a = list[i].getElementsByTagName("a")[0];
+            aValue = a.textContent || a.innerText;
+            if (aValue.toUpperCase()
+                .indexOf(inputText) > -1) {
+                list[i].style.display = "";
             } else {
-                li[i].style.display = "none";
+                list[i].style.display = "none";
             }
         }
     }

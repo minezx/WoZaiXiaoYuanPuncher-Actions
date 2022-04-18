@@ -9,14 +9,10 @@ on:
   # Github Action 使用世界标准时间（UTC），北京时间（UTC+8）转换为世界标准时需要减去8小时
     - cron:  '57 2,22 * * *' # 默认在每天 UTC 12:30 和 23:30 （北京时间 20:30 和 7:30）执行
 
-
-
 jobs:
   WZXY_DailyReport:
-
     runs-on: ubuntu-latest
     environment: WZXY_POSITION_DR
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.9
@@ -49,5 +45,6 @@ jobs:
         WZXY_PROVINCE: ${{secrets.PROVINCE}}
         WZXY_TOWNSHIP: ${{secrets.TOWNSHIP}}
         WZXY_STREET: ${{secrets.STREET}}
+        WZXY_CITY_CODE: ${{secrets.CITY_CODE}}
       run: python wzxy-dailyreport.py
       

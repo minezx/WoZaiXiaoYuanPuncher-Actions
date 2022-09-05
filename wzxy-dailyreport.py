@@ -8,9 +8,7 @@ import time
 import urllib
 import urllib.parse
 from urllib.parse import urlencode
-
 import requests
-
 import utils
 
 
@@ -42,7 +40,7 @@ class WoZaiXiaoYuanPuncher:
     def login(self):
         username, password = str(os.environ["WZXY_USERNAME"]), str(
             os.environ["WZXY_PASSWORD"]
-            )
+        )
         url = f"{self.loginUrl}?username={username}&password={password}" 
         self.session = requests.session()
         # 登录
@@ -134,33 +132,34 @@ class WoZaiXiaoYuanPuncher:
         self.header["Content-Type"] = "application/x-www-form-urlencoded"
         self.header["JWSESSION"] = self.getJwsession()
         cur_time = int(round(time.time() * 1000))
-        if os.environ['WZXY_TEMPERATURE']:
-            TEMPERATURE = utils.getRandomTemperature(os.environ['WZXY_TEMPERATURE'])
+        if os.environ["WZXY_TEMPERATURE"]:
+            TEMPERATURE = utils.getRandomTemperature(os.environ["WZXY_TEMPERATURE"])
         else:
-            TEMPERATURE = utils.getRandomTemperature('36.0~36.5')
+            TEMPERATURE = utils.getRandomTemperature("36.0~36.5")
         sign_data = {
-            "answers": '["0"]',
+            "answers": '["0"]',  # 在此自定义answers字段
             "seq": str(seq),
             "temperature": TEMPERATURE,
-            "latitude": os.environ['WZXY_LATITUDE'],
-            "longitude": os.environ['WZXY_LONGITUDE'],
-            "country": os.environ['WZXY_COUNTRY'],
-            "city": os.environ['WZXY_CITY'],
-            "district": os.environ['WZXY_DISTRICT'],
-            "province": os.environ['WZXY_PROVINCE'],
-            "township": os.environ['WZXY_TOWNSHIP'],
-            "street": os.environ['WZXY_STREET'],
-            "myArea": "",
-            "areacode": "",
+            "latitude": os.environ["WZXY_LATITUDE"],
+            "longitude": os.environ["WZXY_LONGITUDE"],
+            "country": os.environ["WZXY_COUNTRY"],
+            "city": os.environ["WZXY_CITY"],
+            "district": os.environ["WZXY_DISTRICT"],
+            "province": os.environ["WZXY_PROVINCE"],
+            "township": os.environ["WZXY_TOWNSHIP"],
+            "street": os.environ["WZXY_STREET"],
+            "myArea": os.environ["WZXY_MYAREA"],
+            "areacode": os.environ["WZXY_AREACODE"],
+            "towncode": os.environ["WZXY_TOWNCODE"],
+            "citycode": os.environ["WZXY_CITYCODE"],
             "userId": "",
-            "city_code": os.environ["WZXY_CITY_CODE"],
             "timestampHeader": cur_time,
             "signatureHeader": hashlib.sha256(
                 f"{os.environ['WZXY_PROVINCE']}_{cur_time}_{os.environ['WZXY_CITY']}".encode(
                     "utf-8"
                 )
             ).hexdigest(),
-}
+        }
         data = urlencode(sign_data)
         self.session = requests.session()    
         response = self.session.post(url=url, data=data, headers=self.header)
@@ -207,30 +206,18 @@ class WoZaiXiaoYuanPuncher:
         notifyResult = self.getResult()
         notifySeq = self.getSeq()
 
-        if os.environ.get("SCT_KEY"):
-            # serverchan 推送
-            notifyToken = os.environ["SCT_KEY"]
-            url = "https://sctapi.ftqq.com/{}.send"
-            body = {
-                "title": "⏰ 我在校园打卡结果：{}".format(notifyResult),
-                "desp": "打卡项目：日检日报\n\n打卡情况：{}\n\n打卡时段：{}\n\n打卡时间：{}".format(
-                    notifyResult, notifySeq, notifyTime
-                ),
-            }
-            requests.post(url.format(notifyToken), data=body)
-            print("消息经 Serverchan-Turbo 推送成功")
         if os.environ.get("PUSHPLUS_TOKEN"):
             # pushplus 推送
             url = "http://www.pushplus.plus/send"
             notifyToken = os.environ["PUSHPLUS_TOKEN"]
             content = json.dumps(
-                {
+            {
                 "打卡项目": "日检日报",
                 "打卡情况": notifyResult,
                 "打卡时段": notifySeq,
                 "打卡时间": notifyTime,
-                }, 
-                ensure_ascii=False,
+            },
+            ensure_ascii=False,
             )
             msg = {
                 "token": notifyToken,
@@ -238,58 +225,14 @@ class WoZaiXiaoYuanPuncher:
                 "content": content,
                 "template": "json",
             }
-            body=json.dumps(msg).encode(encoding='utf-8')
-            headers = {'Content-Type':'application/json'}
+            body = json.dumps(msg).encode(encoding="utf-8")
+            headers = {"Content-Type": "application/json"}
             r = requests.post(url, data=body, headers=headers).json()
             if r["code"] == 200:
-                print("消息经pushplus推送成功")
+                print("消息经 pushplus 推送成功")
             else:
-                print("pushplus: " + r['code'] + ": " + r['msg'])
-                print("消息经pushplus推送失败，请检查token是否配置正确")
-        if os.environ.get('DD_BOT_ACCESS_TOKEN'):
-            # 钉钉推送
-            DD_BOT_ACCESS_TOKEN = os.environ["DD_BOT_ACCESS_TOKEN"]
-            DD_BOT_SECRET = os.environ["DD_BOT_SECRET"]
-            timestamp = str(round(time.time() * 1000))  # 时间戳
-            secret_enc = DD_BOT_SECRET.encode("utf-8")
-            string_to_sign = "{}\n{}".format(timestamp, DD_BOT_SECRET)
-            string_to_sign_enc = string_to_sign.encode("utf-8")
-            hmac_code = hmac.new(
-                secret_enc, string_to_sign_enc, digestmod=hashlib.sha256
-            ).digest()
-            sign = urllib.parse.quote_plus(base64.b64encode(hmac_code))  # 签名
-            print("开始使用 钉钉机器人 推送消息...", end="")
-            url = f"https://oapi.dingtalk.com/robot/send?access_token={DD_BOT_ACCESS_TOKEN}&timestamp={timestamp}&sign={sign}"
-            headers = {"Content-Type": "application/json;charset=utf-8"}
-            data = {
-                "msgtype": "text",
-                "text": {
-                    "content": f"⏰ 我在校园打卡结果通知\n---------\n打卡项目：日检日报\n\n打卡情况：{notifyResult}\n\n打卡时间: {notifyTime}"
-                },
-            }
-            r = requests.post(url=url, data=json.dumps(data), headers=headers, timeout=15).json()
-            if not r['errcode']:
-                print('消息经 钉钉机器人 推送成功！')
-            else:
-                print("dingding:" + r['errcode'] + ": " + r['errmsg'])
-                print('消息经 钉钉机器人 推送失败，请检查错误信息')
-        if os.environ.get('BARK_TOKEN'):
-            # bark 推送
-            notifyToken = os.environ["BARK_TOKEN"]
-            req = "{}/{}/{}".format(notifyToken, "⏰ 我在校园打卡（日检日报）结果通知", notifyResult)
-            requests.get(req)
-            print("消息经bark推送成功")
-        if os.environ.get("MIAO_CODE"):
-            baseurl = "https://miaotixing.com/trigger"
-            body = {
-                "id": os.environ["MIAO_CODE"],
-                "text": "打卡项目：日检日报\n\n打卡情况：{}\n\n打卡时段：{}\n\n打卡时间：{}".format(
-                    notifyResult, notifySeq, notifyTime
-                    ),
-            }
-            requests.post(baseurl, data=body)
-            print("消息已通过 喵推送 进行通知，请检查推送结果")
-
+                print("pushplus: " + str(r["code"]) + ": " + str(r["msg"]))
+                print("消息经 pushplus 推送失败，请检查错误信息")
 
 if __name__ == "__main__":
     # 找不到cache，登录+打卡

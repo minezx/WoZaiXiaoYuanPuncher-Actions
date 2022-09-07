@@ -118,7 +118,7 @@ class WoZaiXiaoYuanPuncher:
                 if int(i["state"]) == 1:
                     inSeq = True
                     # 保存当前学校的打卡时段
-                    self.check_id = int(i["id"])
+                    self.check_id = str(i["id"])
                     self.check_title = str(i["title"])
                     # 判断是否已经打卡
                     if int(i["type"]) == 0:

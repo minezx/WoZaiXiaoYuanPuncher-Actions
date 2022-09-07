@@ -114,7 +114,7 @@ class WoZaiXiaoYuanPuncher:
         # }
         # data = urlencode(get_check_data)
         self.session = requests.session()
-        response = self.session.post(url=url, data={}, headers=self.header)
+        response = self.session.post(url=url, data='{}', headers=self.header)
         response = json.loads(response.text)
         print(response)
         return

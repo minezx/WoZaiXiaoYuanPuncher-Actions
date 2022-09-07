@@ -140,12 +140,12 @@ class WoZaiXiaoYuanPuncher:
         self.header["Content-Type"] = "application/json;charset=UTF-8"
         self.header["JWSESSION"] = self.getJwsession()
 
-        cur_time = int(round(time.time() * 1000))
+        # cur_time = int(round(time.time() * 1000))
         
-        if os.environ["WZXY_TEMPERATURE"]:
-            TEMPERATURE = utils.getRandomTemperature(os.environ["WZXY_TEMPERATURE"])
-        else:
-            TEMPERATURE = utils.getRandomTemperature("36.0~36.5")
+        # if os.environ["WZXY_TEMPERATURE"]:
+        #     TEMPERATURE = utils.getRandomTemperature(os.environ["WZXY_TEMPERATURE"])
+        # else:
+        #     TEMPERATURE = utils.getRandomTemperature("36.0~36.5")
         sign_data = {
             "location": "中国/陕西省/宝鸡市/岐山县/蔡家坡镇//156/610323/156610300/610323112",
             "t1": "是",
@@ -156,7 +156,7 @@ class WoZaiXiaoYuanPuncher:
         }
         data = urlencode(sign_data)
         self.session = requests.session()    
-        response = self.session.post(url=url, data=data, headers=self.header)
+        response = self.session.post(url=url, data=sign_data, headers=self.header)
         response = json.loads(response.text)
         print(response)
         # 打卡情况

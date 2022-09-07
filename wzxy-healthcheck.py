@@ -90,7 +90,7 @@ class WoZaiXiaoYuanPuncher:
         self.header["Host"] = "gw.wozaixiaoyuan.com"
         self.header["Content-Type"] = "application/json;charset=UTF-8"
         self.header["JWSESSION"] = self.getJwsession()
-        get_check_data={}
+        # get_check_data={}
 
         # cur_time = int(round(time.time() * 1000))
         # sign_data = {
@@ -113,9 +113,9 @@ class WoZaiXiaoYuanPuncher:
         #         )
         #     ).hexdigest(),
         # }
-        data = urlencode(get_check_data)
+        # data = urlencode(get_check_data)
         self.session = requests.session()
-        response = self.session.post(url=url, data=data, headers=self.header)
+        response = self.session.post(url=url, data={}, headers=self.header)
         response = json.loads(response.text)
         print(response)
         # 打卡情况

@@ -85,35 +85,40 @@ class WoZaiXiaoYuanPuncher:
     # 执行打卡
     def doPunchIn(self):
         print("正在打卡...")
-        url = "https://student.wozaixiaoyuan.com/health/save.json"
-        self.header["Host"] = "student.wozaixiaoyuan.com"
-        self.header["Content-Type"] = "application/x-www-form-urlencoded"
+
+        url = "https://gw.wozaixiaoyuan.com/health/mobile/health/getBatch"
+        self.header["Host"] = "gw.wozaixiaoyuan.com"
+        self.header["Content-Type"] = "application/json;charset=UTF-8"
         self.header["JWSESSION"] = self.getJwsession()
-        cur_time = int(round(time.time() * 1000))
-        sign_data = {
-            "answers": '["0","1","1"]',
-            "latitude": os.environ["WZXY_LATITUDE"],
-            "longitude": os.environ["WZXY_LONGITUDE"],
-            "country": os.environ["WZXY_COUNTRY"],
-            "city": os.environ["WZXY_CITY"],
-            "district": os.environ["WZXY_DISTRICT"],
-            "province": os.environ["WZXY_PROVINCE"],
-            "township": os.environ["WZXY_TOWNSHIP"],
-            "street": os.environ["WZXY_STREET"],
-            "areacode": os.environ["WZXY_AREACODE"],
-            "towncode": os.environ["WZXY_TOWNCODE"],
-            "citycode": os.environ["WZXY_CITYCODE"],
-            "timestampHeader": cur_time,
-            "signatureHeader": hashlib.sha256(
-                f"{os.environ['WZXY_PROVINCE']}_{cur_time}_{os.environ['WZXY_CITY']}".encode(
-                    "utf-8"
-                )
-            ).hexdigest(),
-        }
-        data = urlencode(sign_data)
+        get_check_data={}
+
+        # cur_time = int(round(time.time() * 1000))
+        # sign_data = {
+        #     "answers": '["0","1","1"]',
+        #     "latitude": os.environ["WZXY_LATITUDE"],
+        #     "longitude": os.environ["WZXY_LONGITUDE"],
+        #     "country": os.environ["WZXY_COUNTRY"],
+        #     "city": os.environ["WZXY_CITY"],
+        #     "district": os.environ["WZXY_DISTRICT"],
+        #     "province": os.environ["WZXY_PROVINCE"],
+        #     "township": os.environ["WZXY_TOWNSHIP"],
+        #     "street": os.environ["WZXY_STREET"],
+        #     "areacode": os.environ["WZXY_AREACODE"],
+        #     "towncode": os.environ["WZXY_TOWNCODE"],
+        #     "citycode": os.environ["WZXY_CITYCODE"],
+        #     "timestampHeader": cur_time,
+        #     "signatureHeader": hashlib.sha256(
+        #         f"{os.environ['WZXY_PROVINCE']}_{cur_time}_{os.environ['WZXY_CITY']}".encode(
+        #             "utf-8"
+        #         )
+        #     ).hexdigest(),
+        # }
+        data = urlencode(get_check_data)
         self.session = requests.session()
         response = self.session.post(url=url, data=data, headers=self.header)
         response = json.loads(response.text)
+        print(response)
+        return
         # 打卡情况
         # 如果 jwsession 无效，则重新 登录 + 打卡
         if response["code"] == -10:

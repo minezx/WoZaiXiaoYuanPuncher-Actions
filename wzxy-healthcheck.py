@@ -113,7 +113,7 @@ class WoZaiXiaoYuanPuncher:
             inSeq = False
             # 遍历每个打卡时段（不同学校的打卡时段数量可能不一样）
             data1 = res["data"]
-            for i in data1:
+            for i in data1["list"]:
                 # 判断时段是否有效
                 if int(i["state"]) == 1:
                     inSeq = True

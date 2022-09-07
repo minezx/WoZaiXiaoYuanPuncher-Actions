@@ -138,6 +138,14 @@ class WoZaiXiaoYuanPuncher:
         url = "https://gw.wozaixiaoyuan.com/health/mobile/health/save?batch=" + self.check_id
         self.header["Host"] = "gw.wozaixiaoyuan.com"
         self.header["Content-Type"] = "application/json;charset=UTF-8"
+        self.header["Content-Length"] = 158
+        self.header["Origin"] = "https://gw.wozaixiaoyuan.com"
+        self.header["X-Requested-With"] = "com.tencent.mm"
+        self.header["Sec-Fetch-Site"] = "same-origin"
+        self.header["Sec-Fetch-Mode"] = "cors"
+        self.header["Sec-Fetch-Dest"] = "empty"
+        self.header["Referer"] = "https://gw.wozaixiaoyuan.com/h5/mobile/health/index/health/detail?id=" + self.check_id
+        self.header["Cookie"] = "JWSESSION=" + self.getJwsession()
         self.header["JWSESSION"] = self.getJwsession()
 
         # cur_time = int(round(time.time() * 1000))

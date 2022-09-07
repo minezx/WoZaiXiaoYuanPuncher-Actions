@@ -138,7 +138,7 @@ class WoZaiXiaoYuanPuncher:
         url = "https://gw.wozaixiaoyuan.com/health/mobile/health/save?batch=" + self.check_id
         self.header["Host"] = "gw.wozaixiaoyuan.com"
         self.header["Content-Type"] = "application/json;charset=UTF-8"
-        self.header["Content-Length"] = 158
+        self.header["Content-Length"] = "158"
         self.header["Origin"] = "https://gw.wozaixiaoyuan.com"
         self.header["X-Requested-With"] = "com.tencent.mm"
         self.header["Sec-Fetch-Site"] = "same-origin"

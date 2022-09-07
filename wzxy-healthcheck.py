@@ -118,7 +118,6 @@ class WoZaiXiaoYuanPuncher:
         response = self.session.post(url=url, data=data, headers=self.header)
         response = json.loads(response.text)
         print(response)
-        return
         # 打卡情况
         # 如果 jwsession 无效，则重新 登录 + 打卡
         if response["code"] == -10:

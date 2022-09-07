@@ -96,6 +96,7 @@ class WoZaiXiaoYuanPuncher:
         self.session = requests.session()
         response = self.session.post(url=url, data=self.body, headers=self.header)
         res = json.loads(response.text)
+        print(res)
         # 如果 jwsession 无效，则重新 登录 + 打卡
         if res["code"] == -10:
             print(res)
@@ -111,7 +112,8 @@ class WoZaiXiaoYuanPuncher:
             # 标志时段是否有效
             inSeq = False
             # 遍历每个打卡时段（不同学校的打卡时段数量可能不一样）
-            for i in res.data["list"]:
+            data1 = res["data"]
+            for i in data1:
                 # 判断时段是否有效
                 if int(i["state"]) == 1:
                     inSeq = True

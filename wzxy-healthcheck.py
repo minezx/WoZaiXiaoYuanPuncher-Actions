@@ -148,7 +148,7 @@ class WoZaiXiaoYuanPuncher:
         self.header["Cookie"] = "JWSESSION=" + self.getJwsession()
         self.header["JWSESSION"] = self.getJwsession()
 
-        # cur_time = int(round(time.time() * 1000))
+        cur_time = int(round(time.time() * 1000))
         
         # if os.environ["WZXY_TEMPERATURE"]:
         #     TEMPERATURE = utils.getRandomTemperature(os.environ["WZXY_TEMPERATURE"])
@@ -160,7 +160,13 @@ class WoZaiXiaoYuanPuncher:
             "t2": "绿色",
             "t3": "是",
             "type": 0,
-            "locationType": 0
+            "locationType": 0,
+            "timestampHeader": cur_time,
+            "signatureHeader": hashlib.sha256(
+                f"{os.environ['WZXY_PROVINCE']}_{cur_time}_{os.environ['WZXY_CITY']}".encode(
+                    "utf-8"
+                )
+            ).hexdigest(),
         }
         data = urlencode(sign_data)
         self.session = requests.session()    

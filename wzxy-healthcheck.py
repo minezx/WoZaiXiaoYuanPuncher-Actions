@@ -16,6 +16,10 @@ class WoZaiXiaoYuanPuncher:
     def __init__(self):
         # JWSESSION
         self.jwsession = None
+        #打卡id
+        self.check_id = None
+        #打卡名称
+        self.check_title = None
         # 打卡时段
         self.seq = None
         # 打卡结果
@@ -89,40 +93,6 @@ class WoZaiXiaoYuanPuncher:
         self.header["Host"] = "gw.wozaixiaoyuan.com"
         self.header["Content-Type"] = "application/json;charset=UTF-8"
         self.header["JWSESSION"] = self.getJwsession()
-        # get_check_data={}
-
-        # cur_time = int(round(time.time() * 1000))
-        # sign_data = {
-        #     "answers": '["0","1","1"]',
-        #     "latitude": os.environ["WZXY_LATITUDE"],
-        #     "longitude": os.environ["WZXY_LONGITUDE"],
-        #     "country": os.environ["WZXY_COUNTRY"],
-        #     "city": os.environ["WZXY_CITY"],
-        #     "district": os.environ["WZXY_DISTRICT"],
-        #     "province": os.environ["WZXY_PROVINCE"],
-        #     "township": os.environ["WZXY_TOWNSHIP"],
-        #     "street": os.environ["WZXY_STREET"],
-        #     "areacode": os.environ["WZXY_AREACODE"],
-        #     "towncode": os.environ["WZXY_TOWNCODE"],
-        #     "citycode": os.environ["WZXY_CITYCODE"],
-        #     "timestampHeader": cur_time,
-        #     "signatureHeader": hashlib.sha256(
-        #         f"{os.environ['WZXY_PROVINCE']}_{cur_time}_{os.environ['WZXY_CITY']}".encode(
-        #             "utf-8"
-        #         )
-        #     ).hexdigest(),
-        # }
-        # data = urlencode(get_check_data)
-        self.session = requests.session()
-        response = self.session.post(url=url, data='{}', headers=self.header)
-        response = json.loads(response.text)
-        print(response)
-        return
-
-
-        url = "https://student.wozaixiaoyuan.com/heat/getTodayHeatList.json"
-        self.header["Host"] = "student.wozaixiaoyuan.com"
-        self.header["JWSESSION"] = self.getJwsession()
         self.session = requests.session()
         response = self.session.post(url=url, data=self.body, headers=self.header)
         res = json.loads(response.text)
@@ -141,15 +111,16 @@ class WoZaiXiaoYuanPuncher:
             # 标志时段是否有效
             inSeq = False
             # 遍历每个打卡时段（不同学校的打卡时段数量可能不一样）
-            for i in res["data"]:
+            for i in res.data["list"]:
                 # 判断时段是否有效
                 if int(i["state"]) == 1:
                     inSeq = True
                     # 保存当前学校的打卡时段
-                    self.seq = int(i["seq"])
+                    self.check_id = int(i["id"])
+                    self.check_title = str(i["title"])
                     # 判断是否已经打卡
                     if int(i["type"]) == 0:
-                        self.doPunchIn(str(i["seq"]))
+                        self.doPunchIn(str(i["id"]),str(i["title"]))
                     elif int(i["type"]) == 1:
                         self.status_code = 2
                         print("已经打过卡了")
@@ -160,12 +131,13 @@ class WoZaiXiaoYuanPuncher:
 
     # 执行打卡
     # 参数seq ： 当前打卡的序号
-    def doPunchIn(self, seq):
-        print("正在进行：" + self.getSeq() + "...")
-        url = "https://student.wozaixiaoyuan.com/heat/save.json"
-        self.header["Host"] = "student.wozaixiaoyuan.com"
-        self.header["Content-Type"] = "application/x-www-form-urlencoded"
+    def doPunchIn(self, check_id, check_title):
+        print("正在进行：" + self.check_title + "...")
+        url = "https://gw.wozaixiaoyuan.com/health/mobile/health/save?batch=" + self.check_id
+        self.header["Host"] = "gw.wozaixiaoyuan.com"
+        self.header["Content-Type"] = "application/json;charset=UTF-8"
         self.header["JWSESSION"] = self.getJwsession()
+
         cur_time = int(round(time.time() * 1000))
         
         if os.environ["WZXY_TEMPERATURE"]:
@@ -173,33 +145,18 @@ class WoZaiXiaoYuanPuncher:
         else:
             TEMPERATURE = utils.getRandomTemperature("36.0~36.5")
         sign_data = {
-            "answers": '["0"]',  # 在此自定义answers字段
-            "seq": str(seq),
-            "temperature": TEMPERATURE,
-            "latitude": "",
-            "longitude": "",
-            "country": "",
-            "city": "",
-            "district": "",
-            "province": "",
-            "township": "",
-            "street": "",
-            "myArea": "",
-            "areacode": "",
-            "towncode": "",
-            "citycode": "",
-            "userId": "",
-            "timestampHeader": cur_time,
-            "signatureHeader": hashlib.sha256(
-                f"{os.environ['WZXY_PROVINCE']}_{cur_time}_{os.environ['WZXY_CITY']}".encode(
-                    "utf-8"
-                )
-            ).hexdigest(),
+            "location": "中国/陕西省/宝鸡市/岐山县/蔡家坡镇//156/610323/156610300/610323112",
+            "t1": "是",
+            "t2": "绿色",
+            "t3": "是",
+            "type": 0,
+            "locationType": 0
         }
         data = urlencode(sign_data)
         self.session = requests.session()    
         response = self.session.post(url=url, data=data, headers=self.header)
         response = json.loads(response.text)
+        print(response)
         # 打卡情况
         if response["code"] == 0:
             self.status_code = 1

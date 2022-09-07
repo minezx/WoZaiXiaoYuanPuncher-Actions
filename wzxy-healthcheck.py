@@ -159,14 +159,8 @@ class WoZaiXiaoYuanPuncher:
             "t1": "是",
             "t2": "绿色",
             "t3": "是",
-            "type": 0,
-            "locationType": 0,
-            "timestampHeader": cur_time,
-            "signatureHeader": hashlib.sha256(
-                f"{os.environ['WZXY_PROVINCE']}_{cur_time}_{os.environ['WZXY_CITY']}".encode(
-                    "utf-8"
-                )
-            ).hexdigest(),
+            "type": "0",
+            "locationType": "0"
         }
         data = urlencode(sign_data)
         self.session = requests.session()    

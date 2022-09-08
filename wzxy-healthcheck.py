@@ -154,8 +154,10 @@ class WoZaiXiaoYuanPuncher:
         #     TEMPERATURE = utils.getRandomTemperature(os.environ["WZXY_TEMPERATURE"])
         # else:
         #     TEMPERATURE = utils.getRandomTemperature("36.0~36.5")
+        loc = "中国/陕西省/宝鸡市/岐山县/蔡家坡镇//156/610323/156610300/610323112"
+        loc_utf8 = loc.encode("UTF-8")
         sign_data = {
-            'location': '中国/陕西省/宝鸡市/岐山县/蔡家坡镇//156/610323/156610300/610323112',
+            'location': loc_utf8,
             't1': '是',
             't2': '绿色',
             't3': '是',

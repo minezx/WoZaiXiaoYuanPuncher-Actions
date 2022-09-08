@@ -147,6 +147,7 @@ class WoZaiXiaoYuanPuncher:
         self.header["Referer"] = "https://gw.wozaixiaoyuan.com/h5/mobile/health/index/health/detail?id=" + self.check_id
         self.header["Cookie"] = "JWSESSION=" + self.getJwsession()
         self.header["JWSESSION"] = self.getJwsession()
+        print(self.header)
 
         cur_time = int(round(time.time() * 1000))
         

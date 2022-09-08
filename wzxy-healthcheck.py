@@ -154,21 +154,19 @@ class WoZaiXiaoYuanPuncher:
         #     TEMPERATURE = utils.getRandomTemperature(os.environ["WZXY_TEMPERATURE"])
         # else:
         #     TEMPERATURE = utils.getRandomTemperature("36.0~36.5")
-        loc = "中国/陕西省/宝鸡市/岐山县/蔡家坡镇//156/610323/156610300/610323112"
-        loc_utf8 = loc.encode("UTF-8")
         sign_data = {
-            'location': loc_utf8,
+            'location': '中国/陕西省/宝鸡市/岐山县/蔡家坡镇//156/610323/156610300/610323112',
             't1': '是',
             't2': '绿色',
             't3': '是',
             'type': 0,
             'locationType': 0
         }
-        data = json.dumps(sign_data,ensure_ascii=False)
+        # data = json.dumps(sign_data,ensure_ascii=False)
 
         # data = urlencode(sign_data)
         self.session = requests.session()    
-        response = self.session.post(url=url, data=data, headers=self.header)
+        response = self.session.post(url=url, data=sign_data, headers=self.header)
         response = json.loads(response.text)
         print(response)
         # 打卡情况

@@ -20,8 +20,6 @@ class WoZaiXiaoYuanPuncher:
         self.check_id = None
         #打卡名称
         self.check_title = None
-        # 打卡时段
-        self.seq = None
         # 打卡结果
         self.status_code = 0
         # 登陆接口
@@ -98,7 +96,7 @@ class WoZaiXiaoYuanPuncher:
         res = json.loads(response.text)
         print(res)
         # 如果 jwsession 无效，则重新 登录 + 打卡
-        if res["code"] == -10:
+        if res["code"] == 103:
             print(res)
             print("jwsession 无效，将尝试使用账号信息重新登录")
             self.status_code = 4
@@ -132,7 +130,6 @@ class WoZaiXiaoYuanPuncher:
                 print("打卡失败：不在打卡时间段内")
 
     # 执行打卡
-    # 参数seq ： 当前打卡的序号
     def doPunchIn(self, check_id, check_title):
         print("正在进行：" + self.check_title + "...")
         url = "https://gw.wozaixiaoyuan.com/health/mobile/health/save?batch=" + self.check_id
@@ -147,14 +144,6 @@ class WoZaiXiaoYuanPuncher:
         self.header["Referer"] = "https://gw.wozaixiaoyuan.com/h5/mobile/health/index/health/detail?id=" + self.check_id
         self.header["Cookie"] = "JWSESSION=" + self.getJwsession()
         self.header["JWSESSION"] = self.getJwsession()
-        print(self.header)
-
-        cur_time = int(round(time.time() * 1000))
-        
-        # if os.environ["WZXY_TEMPERATURE"]:
-        #     TEMPERATURE = utils.getRandomTemperature(os.environ["WZXY_TEMPERATURE"])
-        # else:
-        #     TEMPERATURE = utils.getRandomTemperature("36.0~36.5")
         sign_data = {
             'location': '中国/陕西省/宝鸡市/岐山县/蔡家坡镇//156/610323/156610300/610323112',
             't1': '是',
@@ -163,11 +152,9 @@ class WoZaiXiaoYuanPuncher:
             'type': 0,
             'locationType': 0
         }
-        # data = json.dumps(sign_data,ensure_ascii=False)
-
-        # data = urlencode(sign_data)
+        data = json.dumps(sign_data)
         self.session = requests.session()    
-        response = self.session.post(url=url, data=sign_data, headers=self.header)
+        response = self.session.post(url=url, data=data, headers=self.header)
         response = json.loads(response.text)
         print(response)
         # 打卡情况
@@ -177,18 +164,6 @@ class WoZaiXiaoYuanPuncher:
         else:
             print(response)
             print("打卡失败")
-                
-    # 获取打卡时段
-    def getSeq(self):
-        seq = self.seq
-        if seq == 1:
-            return "早打卡"
-        elif seq == 2:
-            return "午打卡"
-        elif seq == 3:
-            return "晚打卡"
-        else:
-            return "非打卡时段"
     
     # 获取打卡结果
     def getResult(self):
@@ -210,7 +185,7 @@ class WoZaiXiaoYuanPuncher:
     def sendNotification(self):
         notifyTime = utils.getCurrentTime()
         notifyResult = self.getResult()
-        notifySeq = self.getSeq()
+        notifySeq = self.check_title
 
         if os.environ.get("PUSHPLUS_TOKEN"):
             # pushplus 推送
@@ -218,7 +193,7 @@ class WoZaiXiaoYuanPuncher:
             notifyToken = os.environ["PUSHPLUS_TOKEN"]
             content = json.dumps(
             {
-                "打卡项目": "日检日报",
+                "打卡项目": "健康登记",
                 "打卡情况": notifyResult,
                 "打卡时段": notifySeq,
                 "打卡时间": notifyTime,

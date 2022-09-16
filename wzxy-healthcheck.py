@@ -161,6 +161,16 @@ class WoZaiXiaoYuanPuncher:
         if response["code"] == 0:
             self.status_code = 1
             print("打卡成功")
+        elif response["code"] == 103:
+            print(response)
+            print("jwsession 无效，将尝试使用账号信息重新登录")
+            self.status_code = 4
+            loginStatus = self.login()
+            if loginStatus:
+                self.PunchIn()
+            else:
+                print(response)
+                print("重新登录失败，请检查账号信息")
         else:
             print(response)
             print("打卡失败")

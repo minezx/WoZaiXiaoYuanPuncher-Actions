@@ -227,10 +227,10 @@ class WoZaiXiaoYuanPuncher:
                 print("消息经 pushplus 推送失败，请检查错误信息")
 
 if __name__ == "__main__":
-    wzxy.PunchIn()
-    return
     # 找不到cache，登录+打卡
     wzxy = WoZaiXiaoYuanPuncher()
+    wzxy.PunchIn()
+    return
     if not os.path.exists(".cache"):
         print("找不到cache文件，正在使用账号信息登录...")
         loginStatus = wzxy.login()

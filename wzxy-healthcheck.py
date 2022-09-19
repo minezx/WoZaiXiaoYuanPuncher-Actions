@@ -229,4 +229,4 @@ class WoZaiXiaoYuanPuncher:
 if __name__ == "__main__":
     # 找不到cache，登录+打卡
     wzxy = WoZaiXiaoYuanPuncher()
-    wzxy.PunchIn()
+    wzxy.login()

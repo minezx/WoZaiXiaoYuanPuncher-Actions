@@ -229,4 +229,14 @@ class WoZaiXiaoYuanPuncher:
 if __name__ == "__main__":
     # 找不到cache，登录+打卡
     wzxy = WoZaiXiaoYuanPuncher()
-    wzxy.login()
+    if not os.path.exists(".cache"):
+        print("找不到cache文件，正在使用账号信息登录...")
+        loginStatus = wzxy.login()
+        if loginStatus:
+            wzxy.PunchIn()
+        else:
+            print("登陆失败，请检查账号信息")
+    else:
+        print("找到cache文件，尝试使用jwsession打卡...")
+        wzxy.PunchIn()
+    wzxy.sendNotification()

@@ -48,6 +48,7 @@ class WoZaiXiaoYuanPuncher:
         # 登录
         response = self.session.post(url=url, data=self.body, headers=self.header)
         res = json.loads(response.text)
+        print(res)
         if res["code"] == 0:
             print("使用账号信息登录成功")
             jwsession = response.headers["JWSESSION"]
@@ -226,6 +227,8 @@ class WoZaiXiaoYuanPuncher:
                 print("消息经 pushplus 推送失败，请检查错误信息")
 
 if __name__ == "__main__":
+    wzxy.PunchIn()
+    return
     # 找不到cache，登录+打卡
     wzxy = WoZaiXiaoYuanPuncher()
     if not os.path.exists(".cache"):

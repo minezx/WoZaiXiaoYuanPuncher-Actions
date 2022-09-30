@@ -146,7 +146,7 @@ class WoZaiXiaoYuanPuncher:
         self.header["Cookie"] = "JWSESSION=" + self.getJwsession()
         self.header["JWSESSION"] = self.getJwsession()
         sign_data = {
-            'location': '中国/陕西省/宝鸡市/岐山县/蔡家坡镇//156/610323/156610300/610323112',
+            'location': '中国/陕西省/西安市/鄠邑区/五竹街道/宝鸡钢管路/156/610118/156610100/610118003',
             't1': '是',
             't2': '绿色',
             't3': '是',
